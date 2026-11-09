@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FMCSA Carrier Lookup API: USDOT &amp; MC Number Search</title>
+<meta name="description" content="FMCSA carrier lookup API: search by USDOT or MC number, state or ZIP and get authority status, insurance on file, safety, fleet size, phone and a lead score.">
+<link rel="canonical" href="https://cleanyield-data.github.io/fmcsa-carrier-lookup-api/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="FMCSA Carrier Lookup API: USDOT &amp; MC Number Search">
+<meta property="og:description" content="FMCSA carrier lookup API: search by USDOT or MC number, state or ZIP and get authority status, insurance on file, safety, fleet size, phone and a lead score.">
+<meta property="og:url" content="https://cleanyield-data.github.io/fmcsa-carrier-lookup-api/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"FMCSA Carrier Data","description":"FMCSA carrier lookup API: search by USDOT or MC number, state or ZIP and get authority status, insurance on file, safety, fleet size, phone and a lead score.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/fmcsa-carrier-data","mainEntityOfPage":"https://cleanyield-data.github.io/fmcsa-carrier-lookup-api/","inLanguage":"en","offers":{"@type":"Offer","price":"0.005","priceCurrency":"USD","description":"USD 0.005 per carrier returned (Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+
+<article>
+<h1>FMCSA carrier lookup API</h1>
+<p class="lead">Look up US trucking companies by USDOT or MC number, in bulk, or list the carriers of a state, city, ZIP code or radius, including the ones that just registered. Each row comes from official FMCSA data: authority, insurance on file, safety record, fleet size, contact and a lead score.</p>
+<p>For freight brokers vetting carriers, truck insurance agents and factoring companies looking for new authorities, and developers who need FMCSA data as JSON.</p>
+<p><img class="shot" src="../img/fmcsa-carriers.png" width="1200" height="630" alt="Real results table from a run of FMCSA Carrier Data" loading="eager"></p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/fmcsa-carrier-data-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/fmcsa-carrier-data">Full version in the Apify Store</a></p>
+
+<h2>Real example: input and output</h2>
+<p>Three USDOT numbers in, three carriers out. Shortened to the main fields of one carrier.</p>
+<h3>Input</h3>
+<pre><code>{
+  &quot;dotNumbers&quot;: [
+    &quot;80806&quot;,
+    &quot;53467&quot;,
+    &quot;264184&quot;
+  ]
+}</code></pre>
+<h3>Output (selected fields)</h3>
+<pre><code>[
+  {
+    &quot;dotNumber&quot;: &quot;80806&quot;,
+    &quot;mcNumbers&quot;: [
+      &quot;MC-135797&quot;
+    ],
+    &quot;legalName&quot;: &quot;J B HUNT TRANSPORT INC&quot;,
+    &quot;companyName&quot;: &quot;J B Hunt&quot;,
+    &quot;usdotStatus&quot;: &quot;active&quot;,
+    &quot;authorityStatus&quot;: &quot;active&quot;,
+    &quot;carrierOperation&quot;: &quot;interstate&quot;,
+    &quot;powerUnits&quot;: 25280,
+    &quot;drivers&quot;: 24116,
+    &quot;physicalAddress&quot;: {
+      &quot;city&quot;: &quot;LOWELL&quot;,
+      &quot;state&quot;: &quot;AR&quot;,
+      &quot;oneLine&quot;: &quot;615 J B HUNT CORPORATE DRIVE, LOWELL, AR 72745, US&quot;
+    },
+    &quot;phone&quot;: &quot;+14798200000&quot;,
+    &quot;safetyRating&quot;: &quot;satisfactory&quot;,
+    &quot;insurancePolicies&quot;: [
+      {
+        &quot;insuranceType&quot;: &quot;bipd&quot;,
+        &quot;layer&quot;: &quot;excess&quot;,
+        &quot;insurer&quot;: &quot;Ace American Insurance Company&quot;,
+        &quot;coverageUsd&quot;: 2500000,
+        &quot;effectiveDate&quot;: &quot;2025-12-31&quot;
+      },
+      {
+        &quot;insuranceType&quot;: &quot;cargo&quot;,
+        &quot;layer&quot;: &quot;primary&quot;,
+        &quot;insurer&quot;: &quot;Travelers Casualty and Surety Company of America&quot;,
+        &quot;coverageUsd&quot;: 5000,
+        &quot;effectiveDate&quot;: &quot;2023-10-23&quot;
+      }
+    ],
+    &quot;leadScore&quot;: 38,
+    &quot;leadTier&quot;: &quot;cold&quot;,
+    &quot;scrapedAt&quot;: &quot;2026-11-09T22:19:06.115Z&quot;
+  }
+]</code></pre>
+<p class="muted">Real run on Apify on 2026-11-09 (3 results). Shortened: the full record also has email when on file, fleet equipment, inspections, crashes, authority history and more. The email on file is omitted on this page.</p>
+<section class="scroll" aria-label="Rows from the same run" tabindex="0"><table><caption>Rows from the same run</caption><thead><tr><th scope="col">USDOT</th><th scope="col">Company</th><th scope="col">Authority</th><th scope="col">Power units</th><th scope="col">Safety rating</th></tr></thead><tbody><tr><td>80806</td><td>J B Hunt</td><td>active</td><td>25280</td><td>satisfactory</td></tr><tr><td>53467</td><td>Werner Enterprises</td><td>active</td><td>9863</td><td>satisfactory</td></tr><tr><td>264184</td><td>Schneider National Carriers</td><td>active</td><td>9866</td><td>satisfactory</td></tr></tbody></table></section>
+
+<h2>What you get</h2>
+<section class="scroll" aria-label="What you get" tabindex="0"><table><caption>What you get</caption><thead><tr><th scope="col">Field</th><th scope="col">What it is</th></tr></thead><tbody><tr><td>dotNumber, mcNumbers, legalName, companyName</td><td>who the carrier is</td></tr><tr><td>usdotStatus, authorityStatus, authority</td><td>USDOT status and each operating authority with its status and dates</td></tr><tr><td>insurancePolicies, insuranceSummary</td><td>insurer, coverage and effective dates on file</td></tr><tr><td>safety, safetyRating, outOfService</td><td>inspections, crashes, out-of-service rates and safety rating</td></tr><tr><td>powerUnits, drivers, cargoCarried, physicalAddress</td><td>fleet size, cargo and address</td></tr><tr><td>phone, email</td><td>phone, and email when on file with FMCSA</td></tr><tr><td>leadScore, leadTier</td><td>a 0–100 lead score with the reasons behind it</td></tr></tbody></table></section>
+
+<h2>How to use it</h2>
+<h3>In the Apify Store (no code)</h3>
+<ol><li>Start with the <a href="https://apify.com/cleanyield/fmcsa-carrier-data-lite">free Lite version</a> (up to 25 results per run, no per-result fee), or open the <a href="https://apify.com/cleanyield/fmcsa-carrier-data">full version</a>, and click <strong>Try for free</strong> (Apify account, free plan included).</li><li>Paste your list in the form, or use the input above.</li><li>Click <strong>Start</strong> and download the results as JSON, CSV or Excel.</li></ol>
+<h3>From your code (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~fmcsa-carrier-data/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;dotNumbers&quot;: [
+    &quot;80806&quot;,
+    &quot;53467&quot;,
+    &quot;264184&quot;
+  ]
+}'</code></pre>
+<p class="muted">Create an API token in Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> caps what the run can cost; the run stops there.</p>
+<h3>n8n and Make</h3>
+<p>In n8n, add the official Apify node; in Make, use the Apify app. Choose the Actor <code>cleanyield/fmcsa-carrier-data</code>, paste the input JSON above, and read the dataset items in the next step. You can also schedule the Actor in Apify and send the results to a webhook, Google Sheets or Slack.</p>
+
+<h2 id="price">Price</h2>
+<dl class="price">
+<dt>Today</dt><dd>USD 5 per 1,000 carriers (USD 0.005 per carrier) on the Apify Free plan; Apify subscribers pay less (Gold: USD 3.50 per 1,000).</dd>
+<dt>From November 24, 2026</dt><dd>Monitor mode adds USD 0.001 per watched carrier per monitor run (today monitor mode charges only new or changed carriers). The price per carrier does not change.</dd>
+</dl>
+<p>Optional: Pro mode + USD 0.005 per carrier, company website contacts + USD 0.01 per website read. Numbers that do not exist and incomplete records are not charged.</p>
+<p>Free Lite version: no per-result fee, up to 25 carriers per run (only Apify platform usage applies).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/fmcsa-carrier-data-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/fmcsa-carrier-data">Full version in the Apify Store</a></p>
+</article>
+
+<nav aria-label="Other data tools by Clean Yield"><h2>Other data tools by Clean Yield</h2><ul><li><a href="../company-enrichment-api/">Company Enrichment from Website</a></li><li><a href="../greenhouse-jobs-api/">ATS Jobs Scraper</a></li><li><a href="../app-store-reviews-api/">App Store &amp; Google Play Reviews Scraper</a></li><li><a href="../licitaciones-publicas-api/">Latin America Public Tenders</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Updated 2026-11-09</p><p class="muted">Clean Yield is an independent publisher on Apify. Product names are trademarks of their owners and are used only to describe compatibility.</p></div></footer>
+</body>
+</html>

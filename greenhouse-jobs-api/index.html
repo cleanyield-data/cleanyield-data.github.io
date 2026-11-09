@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greenhouse Jobs API: Every Open Job of Any Company</title>
+<meta name="description" content="Greenhouse jobs API: type a company name or board URL and get its live open jobs with location, remote type, salary when posted and apply link, in JSON or CSV.">
+<link rel="canonical" href="https://cleanyield-data.github.io/greenhouse-jobs-api/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Greenhouse Jobs API: Every Open Job of Any Company">
+<meta property="og:description" content="Greenhouse jobs API: type a company name or board URL and get its live open jobs with location, remote type, salary when posted and apply link, in JSON or CSV.">
+<meta property="og:url" content="https://cleanyield-data.github.io/greenhouse-jobs-api/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ATS Jobs Scraper","description":"Greenhouse jobs API: type a company name or board URL and get its live open jobs with location, remote type, salary when posted and apply link, in JSON or CSV.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/ats-jobs-scraper","mainEntityOfPage":"https://cleanyield-data.github.io/greenhouse-jobs-api/","inLanguage":"en","offers":{"@type":"Offer","price":"0.002","priceCurrency":"USD","description":"USD 0.002 per job returned plus USD 0.005 per run until November 23, 2026; USD 0.005 per job plus USD 0.005 per run from November 24, 2026 (Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+
+<article>
+<h1>Greenhouse jobs API</h1>
+<p class="lead">Type a company name or its Greenhouse board URL and get every open job from the company’s own careers page: title, department, location, remote or onsite, posting date, apply link and the salary range when the company posts it.</p>
+<p>For recruiters and sourcers, sales teams that sell to companies that are hiring, and analysts tracking hiring at a list of companies.</p>
+<p><img class="shot" src="../img/ats-jobs.png" width="1200" height="630" alt="Real results table from a run of ATS Jobs Scraper" loading="eager"></p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/ats-jobs-scraper-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/ats-jobs-scraper">Full version in the Apify Store</a></p>
+
+<h2>Real example: input and output</h2>
+<p>One company, ten newest jobs. Two jobs shown: one with a posted salary and one without (salary fields stay empty).</p>
+<h3>Input</h3>
+<pre><code>{
+  &quot;companies&quot;: [
+    &quot;anthropic&quot;
+  ],
+  &quot;maxJobsPerCompany&quot;: 10,
+  &quot;includeDescription&quot;: &quot;none&quot;
+}</code></pre>
+<h3>Output (selected fields)</h3>
+<pre><code>[
+  {
+    &quot;jobId&quot;: &quot;greenhouse:anthropic:5476704008&quot;,
+    &quot;ats&quot;: &quot;greenhouse&quot;,
+    &quot;company&quot;: &quot;Anthropic&quot;,
+    &quot;title&quot;: &quot;Recruiter, Communications&quot;,
+    &quot;department&quot;: &quot;People&quot;,
+    &quot;location&quot;: &quot;San Francisco, CA | New York City, NY&quot;,
+    &quot;countryCode&quot;: &quot;US&quot;,
+    &quot;workplaceType&quot;: &quot;onsite&quot;,
+    &quot;employmentType&quot;: null,
+    &quot;salaryAnnualMin&quot;: 240000,
+    &quot;salaryAnnualMax&quot;: 295000,
+    &quot;salaryCurrency&quot;: &quot;USD&quot;,
+    &quot;salaryText&quot;: &quot;Annual Salary: USD 240,000–295,000&quot;,
+    &quot;postedAt&quot;: &quot;2026-11-09T14:22:17.000Z&quot;,
+    &quot;applyUrl&quot;: &quot;https://job-boards.greenhouse.io/anthropic/jobs/5476704008&quot;
+  },
+  {
+    &quot;jobId&quot;: &quot;greenhouse:anthropic:5476577008&quot;,
+    &quot;ats&quot;: &quot;greenhouse&quot;,
+    &quot;company&quot;: &quot;Anthropic&quot;,
+    &quot;title&quot;: &quot;Applied AI Architect&quot;,
+    &quot;department&quot;: &quot;Applied AI&quot;,
+    &quot;location&quot;: &quot;Seoul, South Korea&quot;,
+    &quot;countryCode&quot;: &quot;KR&quot;,
+    &quot;workplaceType&quot;: &quot;onsite&quot;,
+    &quot;employmentType&quot;: null,
+    &quot;salaryAnnualMin&quot;: null,
+    &quot;salaryAnnualMax&quot;: null,
+    &quot;salaryCurrency&quot;: null,
+    &quot;salaryText&quot;: null,
+    &quot;postedAt&quot;: &quot;2026-11-09T06:47:38.000Z&quot;,
+    &quot;applyUrl&quot;: &quot;https://job-boards.greenhouse.io/anthropic/jobs/5476577008&quot;
+  }
+]</code></pre>
+<p class="muted">Real run on Apify on 2026-11-09 (10 results). 6 of the 10 jobs in this run include a salary range; the rest leave salary fields empty because the posting has none.</p>
+<section class="scroll" aria-label="Rows from the same run" tabindex="0"><table><caption>Rows from the same run</caption><thead><tr><th scope="col">Job title</th><th scope="col">Location</th><th scope="col">Workplace</th><th scope="col">Salary (annual)</th><th scope="col">Posted</th></tr></thead><tbody><tr><td>National Security Lead, APAC</td><td>Canberra, Australia</td><td>remote</td><td>not posted</td><td>2026-11-09</td></tr><tr><td>Revenue Strategy and Operations , ANZ</td><td>Sydney, Australia</td><td>onsite</td><td>not posted</td><td>2026-11-09</td></tr><tr><td>Research Scientist, Discovery (Engineering &amp; Applied Sciences)</td><td>San Francisco, CA | New York City, NY</td><td>onsite</td><td>USD 350,000–500,000</td><td>2026-11-09</td></tr><tr><td>Recruiter, Communications</td><td>San Francisco, CA | New York City, NY</td><td>onsite</td><td>USD 240,000–295,000</td><td>2026-11-09</td></tr><tr><td>Research Engineer, Cybersecurity RL</td><td>San Francisco, CA | New York City, NY</td><td>onsite</td><td>USD 500,000–850,000</td><td>2026-11-08</td></tr><tr><td>Staff+ Software Engineer, STEM</td><td>San Francisco, CA | New York City, NY | Seattle, WA</td><td>onsite</td><td>USD 405,000–485,000</td><td>2026-11-07</td></tr></tbody></table></section>
+
+<h2>What you get</h2>
+<section class="scroll" aria-label="What you get" tabindex="0"><table><caption>What you get</caption><thead><tr><th scope="col">Field</th><th scope="col">What it is</th></tr></thead><tbody><tr><td>title, department, company</td><td>the job and who is hiring</td></tr><tr><td>location, city, countryCode, workplaceType</td><td>where, and whether it is remote, hybrid or onsite</td></tr><tr><td>employmentType</td><td>full-time, part-time, contract or internship, when the posting states it</td></tr><tr><td>salaryAnnualMin, salaryAnnualMax, salaryCurrency, salaryText</td><td>salary range when the company posts one (roughly half of jobs, depending on the company)</td></tr><tr><td>postedAt, url, applyUrl</td><td>posting date and direct links to the job and the application form</td></tr><tr><td>descriptionText / descriptionHtml</td><td>full job description, optional</td></tr></tbody></table></section>
+
+<h2>How to use it</h2>
+<h3>In the Apify Store (no code)</h3>
+<ol><li>Start with the <a href="https://apify.com/cleanyield/ats-jobs-scraper-lite">free Lite version</a> (up to 25 results per run, no per-result fee), or open the <a href="https://apify.com/cleanyield/ats-jobs-scraper">full version</a>, and click <strong>Try for free</strong> (Apify account, free plan included).</li><li>Paste your list in the form, or use the input above.</li><li>Click <strong>Start</strong> and download the results as JSON, CSV or Excel.</li></ol>
+<h3>From your code (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~ats-jobs-scraper/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;companies&quot;: [
+    &quot;anthropic&quot;
+  ],
+  &quot;maxJobsPerCompany&quot;: 10,
+  &quot;includeDescription&quot;: &quot;none&quot;
+}'</code></pre>
+<p class="muted">Create an API token in Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> caps what the run can cost; the run stops there.</p>
+<h3>n8n and Make</h3>
+<p>In n8n, add the official Apify node; in Make, use the Apify app. Choose the Actor <code>cleanyield/ats-jobs-scraper</code>, paste the input JSON above, and read the dataset items in the next step. You can also schedule the Actor in Apify and send the results to a webhook, Google Sheets or Slack.</p>
+
+<h2 id="price">Price</h2>
+<dl class="price">
+<dt>Today</dt><dd>USD 2 per 1,000 jobs (USD 0.002 per job) plus USD 0.005 per run, on the Apify Free plan; Silver and Gold subscribers pay USD 1.20 per 1,000.</dd>
+<dt>From November 24, 2026</dt><dd>USD 5 per 1,000 jobs (USD 0.005 per job) plus USD 0.005 per run; Silver and Gold USD 3 per 1,000.</dd>
+</dl>
+<p>Optional: monitor mode USD 0.004 per company checked, Pro mode + USD 0.005 per job, company details + USD 0.01 per company. Companies not found and failed requests are not charged.</p>
+<p>Free Lite version: no per-result fee, up to 25 jobs per run (only Apify platform usage applies).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/ats-jobs-scraper-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/ats-jobs-scraper">Full version in the Apify Store</a></p>
+</article>
+<nav aria-label="Related pages"><h2>Related pages</h2><ul><li><a href="../workday-jobs-scraper/">Workday jobs scraper</a></li><li><a href="../job-postings-data-api/">Job postings data API</a></li></ul></nav>
+<nav aria-label="Other data tools by Clean Yield"><h2>Other data tools by Clean Yield</h2><ul><li><a href="../company-enrichment-api/">Company Enrichment from Website</a></li><li><a href="../fmcsa-carrier-lookup-api/">FMCSA Carrier Data</a></li><li><a href="../app-store-reviews-api/">App Store &amp; Google Play Reviews Scraper</a></li><li><a href="../licitaciones-publicas-api/">Latin America Public Tenders</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Updated 2026-11-09</p><p class="muted">Clean Yield is an independent publisher on Apify. Product names are trademarks of their owners and are used only to describe compatibility.</p></div></footer>
+</body>
+</html>

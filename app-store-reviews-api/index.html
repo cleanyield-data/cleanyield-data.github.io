@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App Store Reviews API: iOS Reviews by Country &amp; Rating</title>
+<meta name="description" content="App Store reviews API: paste an iPhone app link and get its reviews with rating, title, text, date and app version, for any country, filtered by stars or date.">
+<link rel="canonical" href="https://cleanyield-data.github.io/app-store-reviews-api/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="App Store Reviews API: iOS Reviews by Country &amp; Rating">
+<meta property="og:description" content="App Store reviews API: paste an iPhone app link and get its reviews with rating, title, text, date and app version, for any country, filtered by stars or date.">
+<meta property="og:url" content="https://cleanyield-data.github.io/app-store-reviews-api/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"App Store & Google Play Reviews Scraper","description":"App Store reviews API: paste an iPhone app link and get its reviews with rating, title, text, date and app version, for any country, filtered by stars or date.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/app-store-google-play-reviews","mainEntityOfPage":"https://cleanyield-data.github.io/app-store-reviews-api/","inLanguage":"en","offers":{"@type":"Offer","price":"0.0001","priceCurrency":"USD","description":"USD 0.0001 per review returned (USD 0.10 per 1,000, Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+
+<article>
+<h1>App Store reviews API</h1>
+<p class="lead">Paste an App Store link and get the app’s reviews as clean rows: star rating, title, text, date and app version, for any country. Filter by rating, date or keyword, and add the Google Play version of the same app in the same run.</p>
+<p>For product and support teams reading user feedback, app marketers watching competitors, and analysts who need review data in a spreadsheet or database.</p>
+<p><img class="shot" src="../img/app-reviews.png" width="1200" height="630" alt="Real results table from a run of App Store &amp; Google Play Reviews Scraper" loading="eager"></p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/app-store-google-play-reviews-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/app-store-google-play-reviews">Full version in the Apify Store</a></p>
+
+<h2>Real example: input and output</h2>
+<p>One app, US store, only 1–2 star reviews. Two of the 30 reviews shown.</p>
+<h3>Input</h3>
+<pre><code>{
+  &quot;apps&quot;: [
+    &quot;https://apps.apple.com/us/app/netflix/id363590051&quot;
+  ],
+  &quot;countries&quot;: [
+    &quot;us&quot;
+  ],
+  &quot;maxRating&quot;: 2,
+  &quot;maxReviewsPerApp&quot;: 30
+}</code></pre>
+<h3>Output (selected fields)</h3>
+<pre><code>[
+  {
+    &quot;store&quot;: &quot;appstore&quot;,
+    &quot;appName&quot;: &quot;Netflix&quot;,
+    &quot;country&quot;: &quot;US&quot;,
+    &quot;language&quot;: null,
+    &quot;rating&quot;: 2,
+    &quot;title&quot;: &quot;Too many ads&quot;,
+    &quot;text&quot;: &quot;I pay for the app. I should not have to watch ads.&quot;,
+    &quot;date&quot;: &quot;2026-11-08T15:01:58.000Z&quot;,
+    &quot;appVersion&quot;: &quot;26.4.0&quot;,
+    &quot;developerReply&quot;: null
+  },
+  {
+    &quot;store&quot;: &quot;appstore&quot;,
+    &quot;appName&quot;: &quot;Netflix&quot;,
+    &quot;country&quot;: &quot;US&quot;,
+    &quot;language&quot;: null,
+    &quot;rating&quot;: 1,
+    &quot;title&quot;: &quot;Unauthorized charge&quot;,
+    &quot;text&quot;: &quot;Canceled my plan two months in a row and I’ve gotten billed two months in a row. This is fraud and will be reporting to the FTC&quot;,
+    &quot;date&quot;: &quot;2026-11-08T16:40:42.000Z&quot;,
+    &quot;appVersion&quot;: &quot;26.4.0&quot;,
+    &quot;developerReply&quot;: null
+  }
+]</code></pre>
+<p class="muted">Real run on Apify on 2026-11-09 (30 results). 30 reviews returned, all 1–2 stars as requested.</p>
+<section class="scroll" aria-label="Rows from the same run" tabindex="0"><table><caption>Rows from the same run</caption><thead><tr><th scope="col">Rating</th><th scope="col">Title</th><th scope="col">Date</th><th scope="col">Version</th></tr></thead><tbody><tr><td>★☆☆☆☆</td><td>Unauthorized charge</td><td>2026-11-08</td><td>26.4.0</td></tr><tr><td>★★☆☆☆</td><td>Too many ads</td><td>2026-11-08</td><td>26.4.0</td></tr><tr><td>★☆☆☆☆</td><td>No new shows and no games</td><td>2026-11-08</td><td>26.4.0</td></tr><tr><td>★★☆☆☆</td><td>Not that bad but, pretty okay…</td><td>2026-11-08</td><td>26.4.0</td></tr></tbody></table></section>
+
+<h2>What you get</h2>
+<section class="scroll" aria-label="What you get" tabindex="0"><table><caption>What you get</caption><thead><tr><th scope="col">Field</th><th scope="col">What it is</th></tr></thead><tbody><tr><td>store, appName, appId</td><td>which store and app</td></tr><tr><td>rating, title, text</td><td>stars, review title (App Store) and review text</td></tr><tr><td>date, appVersion</td><td>when it was written and the app version reviewed, when the store shows it</td></tr><tr><td>country, language</td><td>the storefront country or review language you asked for</td></tr><tr><td>developerReply</td><td>the developer reply with its date (Google Play)</td></tr><tr><td>url, thumbsUp</td><td>link to the review and helpful votes</td></tr></tbody></table></section>
+
+<h2>How to use it</h2>
+<h3>In the Apify Store (no code)</h3>
+<ol><li>Start with the <a href="https://apify.com/cleanyield/app-store-google-play-reviews-lite">free Lite version</a> (up to 25 results per run, no per-result fee), or open the <a href="https://apify.com/cleanyield/app-store-google-play-reviews">full version</a>, and click <strong>Try for free</strong> (Apify account, free plan included).</li><li>Paste your list in the form, or use the input above.</li><li>Click <strong>Start</strong> and download the results as JSON, CSV or Excel.</li></ol>
+<h3>From your code (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~app-store-google-play-reviews/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;apps&quot;: [
+    &quot;https://apps.apple.com/us/app/netflix/id363590051&quot;
+  ],
+  &quot;countries&quot;: [
+    &quot;us&quot;
+  ],
+  &quot;maxRating&quot;: 2,
+  &quot;maxReviewsPerApp&quot;: 30
+}'</code></pre>
+<p class="muted">Create an API token in Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> caps what the run can cost; the run stops there.</p>
+<h3>n8n and Make</h3>
+<p>In n8n, add the official Apify node; in Make, use the Apify app. Choose the Actor <code>cleanyield/app-store-google-play-reviews</code>, paste the input JSON above, and read the dataset items in the next step. You can also schedule the Actor in Apify and send the results to a webhook, Google Sheets or Slack.</p>
+
+<h2 id="price">Price</h2>
+<dl class="price">
+<dt>Today</dt><dd>USD 0.10 per 1,000 reviews (10,000 reviews = USD 1) on the Apify Free plan; subscribers pay slightly less.</dd>
+<dt>From November 24, 2026</dt><dd>Monitor mode checks cost USD 0.01 per app per monitor run (USD 0.005 today). The price per review does not change.</dd>
+</dl>
+<p>Optional: alerts add-on USD 0.01 per app with enough data, Pro mode + USD 2 per 1,000 reviews. Failed or incomplete reviews are not charged.</p>
+<p>Free Lite version: no per-result fee, up to 25 reviews per run (only Apify platform usage applies).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/app-store-google-play-reviews-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/app-store-google-play-reviews">Full version in the Apify Store</a></p>
+</article>
+<nav aria-label="Related pages"><h2>Related pages</h2><ul><li><a href="../google-play-reviews-scraper/">Google Play reviews scraper</a></li></ul></nav>
+<nav aria-label="Other data tools by Clean Yield"><h2>Other data tools by Clean Yield</h2><ul><li><a href="../company-enrichment-api/">Company Enrichment from Website</a></li><li><a href="../greenhouse-jobs-api/">ATS Jobs Scraper</a></li><li><a href="../fmcsa-carrier-lookup-api/">FMCSA Carrier Data</a></li><li><a href="../licitaciones-publicas-api/">Latin America Public Tenders</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Updated 2026-11-09</p><p class="muted">Clean Yield is an independent publisher on Apify. Product names are trademarks of their owners and are used only to describe compatibility.</p></div></footer>
+</body>
+</html>

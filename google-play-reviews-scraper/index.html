@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google Play Reviews Scraper: Android Reviews to CSV</title>
+<meta name="description" content="Google Play reviews scraper: paste an Android app link and get its reviews with rating, text, date, app version and developer reply, by language, JSON or CSV.">
+<link rel="canonical" href="https://cleanyield-data.github.io/google-play-reviews-scraper/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Google Play Reviews Scraper: Android Reviews to CSV">
+<meta property="og:description" content="Google Play reviews scraper: paste an Android app link and get its reviews with rating, text, date, app version and developer reply, by language, JSON or CSV.">
+<meta property="og:url" content="https://cleanyield-data.github.io/google-play-reviews-scraper/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"App Store & Google Play Reviews Scraper","description":"Google Play reviews scraper: paste an Android app link and get its reviews with rating, text, date, app version and developer reply, by language, JSON or CSV.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/app-store-google-play-reviews","mainEntityOfPage":"https://cleanyield-data.github.io/google-play-reviews-scraper/","inLanguage":"en","offers":{"@type":"Offer","price":"0.0001","priceCurrency":"USD","description":"USD 0.0001 per review returned (USD 0.10 per 1,000, Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+
+<article>
+<h1>Google Play reviews scraper</h1>
+<p class="lead">Paste a Google Play link and get the app’s reviews with star rating, text, date, app version and the developer’s reply when there is one, filtered by language, rating or date. Export as JSON, CSV or Excel, or add the App Store version of the same app.</p>
+<p>For Android product teams, customer support leads checking reply coverage, and researchers comparing apps.</p>
+<p><img class="shot" src="../img/app-reviews.png" width="1200" height="630" alt="Real results table from a run of App Store &amp; Google Play Reviews Scraper" loading="eager"></p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/app-store-google-play-reviews-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/app-store-google-play-reviews">Full version in the Apify Store</a></p>
+
+<h2>Real example: input and output</h2>
+<p>One app, English reviews, 50 newest. Two reviews shown, one with the developer reply.</p>
+<h3>Input</h3>
+<pre><code>{
+  &quot;apps&quot;: [
+    &quot;https://play.google.com/store/apps/details?id=com.spotify.music&quot;
+  ],
+  &quot;languages&quot;: [
+    &quot;en&quot;
+  ],
+  &quot;maxReviewsPerApp&quot;: 50
+}</code></pre>
+<h3>Output (selected fields)</h3>
+<pre><code>[
+  {
+    &quot;store&quot;: &quot;googleplay&quot;,
+    &quot;appName&quot;: &quot;Spotify: Music and Podcasts&quot;,
+    &quot;country&quot;: null,
+    &quot;language&quot;: &quot;en&quot;,
+    &quot;rating&quot;: 4,
+    &quot;title&quot;: null,
+    &quot;text&quot;: &quot;it's very good I love Spotify but the ADs!!!! it's not like they interrupt your song but they can be soooo annoying 4 stars&quot;,
+    &quot;date&quot;: &quot;2026-11-08T22:10:57.373Z&quot;,
+    &quot;appVersion&quot;: &quot;9.1.94.1929&quot;,
+    &quot;developerReply&quot;: null
+  },
+  {
+    &quot;store&quot;: &quot;googleplay&quot;,
+    &quot;appName&quot;: &quot;Spotify: Music and Podcasts&quot;,
+    &quot;country&quot;: null,
+    &quot;language&quot;: &quot;en&quot;,
+    &quot;rating&quot;: 3,
+    &quot;title&quot;: null,
+    &quot;text&quot;: &quot;too many adds but quality is good 😊&quot;,
+    &quot;date&quot;: &quot;2026-11-08T21:12:47.070Z&quot;,
+    &quot;appVersion&quot;: &quot;9.1.94.1929&quot;,
+    &quot;developerReply&quot;: {
+      &quot;text&quot;: &quot;Hi. Thanks for leaving us a review. We're always looking to make improvements, so we'll pass your thoughts along to the Ads team. If you need help with anything else, reach out to our Customer Service by searching \&quot;Contact us\&quot; at support.spotify.com.&quot;,
+      &quot;date&quot;: &quot;2026-11-08T21:40:03.733Z&quot;
+    }
+  }
+]</code></pre>
+<p class="muted">Real run on Apify on 2026-11-09 (50 results). 50 reviews returned; 6 of them include the developer reply.</p>
+<section class="scroll" aria-label="Rows from the same run" tabindex="0"><table><caption>Rows from the same run</caption><thead><tr><th scope="col">Rating</th><th scope="col">Review (start)</th><th scope="col">Date</th><th scope="col">Developer reply</th></tr></thead><tbody><tr><td>★★★★☆</td><td>it's very good I love Spotify but the ADs!!!! it's not like they interrupt your song but…</td><td>2026-11-08</td><td>—</td></tr><tr><td>★★★★★</td><td>I love spotify</td><td>2026-11-08</td><td>—</td></tr><tr><td>★★★★★</td><td>Ease of use to recommended playlists and the vast array of music selection, are the reas…</td><td>2026-11-08</td><td>—</td></tr><tr><td>★★★☆☆</td><td>Application hangs</td><td>2026-11-08</td><td>Yes</td></tr><tr><td>★★★☆☆</td><td>too many adds but quality is good 😊</td><td>2026-11-08</td><td>Yes</td></tr></tbody></table></section>
+
+<h2>What you get</h2>
+<section class="scroll" aria-label="What you get" tabindex="0"><table><caption>What you get</caption><thead><tr><th scope="col">Field</th><th scope="col">What it is</th></tr></thead><tbody><tr><td>store, appName, appId</td><td>which store and app</td></tr><tr><td>rating, title, text</td><td>stars, review title (App Store) and review text</td></tr><tr><td>date, appVersion</td><td>when it was written and the app version reviewed, when the store shows it</td></tr><tr><td>country, language</td><td>the storefront country or review language you asked for</td></tr><tr><td>developerReply</td><td>the developer reply with its date (Google Play)</td></tr><tr><td>url, thumbsUp</td><td>link to the review and helpful votes</td></tr></tbody></table></section>
+
+<h2>How to use it</h2>
+<h3>In the Apify Store (no code)</h3>
+<ol><li>Start with the <a href="https://apify.com/cleanyield/app-store-google-play-reviews-lite">free Lite version</a> (up to 25 results per run, no per-result fee), or open the <a href="https://apify.com/cleanyield/app-store-google-play-reviews">full version</a>, and click <strong>Try for free</strong> (Apify account, free plan included).</li><li>Paste your list in the form, or use the input above.</li><li>Click <strong>Start</strong> and download the results as JSON, CSV or Excel.</li></ol>
+<h3>From your code (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~app-store-google-play-reviews/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;apps&quot;: [
+    &quot;https://play.google.com/store/apps/details?id=com.spotify.music&quot;
+  ],
+  &quot;languages&quot;: [
+    &quot;en&quot;
+  ],
+  &quot;maxReviewsPerApp&quot;: 50
+}'</code></pre>
+<p class="muted">Create an API token in Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> caps what the run can cost; the run stops there.</p>
+<h3>n8n and Make</h3>
+<p>In n8n, add the official Apify node; in Make, use the Apify app. Choose the Actor <code>cleanyield/app-store-google-play-reviews</code>, paste the input JSON above, and read the dataset items in the next step. You can also schedule the Actor in Apify and send the results to a webhook, Google Sheets or Slack.</p>
+
+<h2 id="price">Price</h2>
+<dl class="price">
+<dt>Today</dt><dd>USD 0.10 per 1,000 reviews (10,000 reviews = USD 1) on the Apify Free plan; subscribers pay slightly less.</dd>
+<dt>From November 24, 2026</dt><dd>Monitor mode checks cost USD 0.01 per app per monitor run (USD 0.005 today). The price per review does not change.</dd>
+</dl>
+<p>Optional: alerts add-on USD 0.01 per app with enough data, Pro mode + USD 2 per 1,000 reviews. Failed or incomplete reviews are not charged.</p>
+<p>Free Lite version: no per-result fee, up to 25 reviews per run (only Apify platform usage applies).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/app-store-google-play-reviews-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/app-store-google-play-reviews">Full version in the Apify Store</a></p>
+</article>
+<nav aria-label="Related pages"><h2>Related pages</h2><ul><li><a href="../app-store-reviews-api/">App Store reviews API</a></li></ul></nav>
+<nav aria-label="Other data tools by Clean Yield"><h2>Other data tools by Clean Yield</h2><ul><li><a href="../company-enrichment-api/">Company Enrichment from Website</a></li><li><a href="../greenhouse-jobs-api/">ATS Jobs Scraper</a></li><li><a href="../fmcsa-carrier-lookup-api/">FMCSA Carrier Data</a></li><li><a href="../licitaciones-publicas-api/">Latin America Public Tenders</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Updated 2026-11-09</p><p class="muted">Clean Yield is an independent publisher on Apify. Product names are trademarks of their owners and are used only to describe compatibility.</p></div></footer>
+</body>
+</html>

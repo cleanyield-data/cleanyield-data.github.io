@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find Company Emails from a Website: Bulk, by Domain</title>
+<meta name="description" content="Find company emails from any website: paste domains, get generic and role emails with the page they came from, phones when published and social profiles.">
+<link rel="canonical" href="https://cleanyield-data.github.io/find-company-emails-from-website/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Find Company Emails from a Website: Bulk, by Domain">
+<meta property="og:description" content="Find company emails from any website: paste domains, get generic and role emails with the page they came from, phones when published and social profiles.">
+<meta property="og:url" content="https://cleanyield-data.github.io/find-company-emails-from-website/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Company Enrichment from Website","description":"Find company emails from any website: paste domains, get generic and role emails with the page they came from, phones when published and social profiles.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/company-enrichment-from-website","mainEntityOfPage":"https://cleanyield-data.github.io/find-company-emails-from-website/","inLanguage":"en","offers":{"@type":"Offer","price":"0.01","priceCurrency":"USD","description":"USD 0.01 per company returned (Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+
+<article>
+<h1>Find company emails from a website</h1>
+<p class="lead">Paste a list of websites and get the contact emails each company publishes (info@, sales@, press@), the page where every email was found, phone numbers in E.164 when listed, and social profiles. Personal emails are left out by default.</p>
+<p>For founders and SDRs doing outreach, agencies cleaning lead lists and anyone who needs the public contact of many companies without opening each site.</p>
+<p><img class="shot" src="../img/company-enrichment.png" width="1200" height="630" alt="Real results table from a run of Company Enrichment from Website" loading="eager"></p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/company-enrichment-from-website-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/company-enrichment-from-website">Full version in the Apify Store</a></p>
+
+<h2>Real example: input and output</h2>
+<p>Four websites in; three answered during this run. Shortened to one company.</p>
+<h3>Input</h3>
+<pre><code>{
+  &quot;domains&quot;: [
+    &quot;katzsdelicatessen.com&quot;,
+    &quot;tartinebakery.com&quot;,
+    &quot;russanddaughters.com&quot;,
+    &quot;cafetortoni.com.ar&quot;
+  ],
+  &quot;sections&quot;: [
+    &quot;contacts&quot;,
+    &quot;social&quot;
+  ]
+}</code></pre>
+<h3>Output (selected fields)</h3>
+<pre><code>[
+  {
+    &quot;domain&quot;: &quot;katzsdelicatessen.com&quot;,
+    &quot;companyName&quot;: &quot;Katz's Delicatessen&quot;,
+    &quot;emails&quot;: [
+      {
+        &quot;email&quot;: &quot;press@katzsdelicatessen.com&quot;,
+        &quot;type&quot;: &quot;role&quot;,
+        &quot;foundOn&quot;: &quot;https://katzsdelicatessen.com/&quot;
+      },
+      {
+        &quot;email&quot;: &quot;sales@katzsdelicatessen.com&quot;,
+        &quot;type&quot;: &quot;role&quot;,
+        &quot;foundOn&quot;: &quot;https://katzsdelicatessen.com/privacypolicy&quot;
+      }
+    ],
+    &quot;phones&quot;: [
+      {
+        &quot;phone&quot;: &quot;+12122542246&quot;,
+        &quot;national&quot;: &quot;(212) 254-2246&quot;,
+        &quot;foundOn&quot;: &quot;https://katzsdelicatessen.com/&quot;
+      },
+      {
+        &quot;phone&quot;: &quot;+18004468364&quot;,
+        &quot;national&quot;: &quot;(800) 446-8364&quot;,
+        &quot;foundOn&quot;: &quot;https://katzsdelicatessen.com/&quot;
+      }
+    ],
+    &quot;socialProfiles&quot;: {
+      &quot;x&quot;: &quot;https://x.com/KatzsDeli&quot;,
+      &quot;facebook&quot;: &quot;https://www.facebook.com/katzsdeli&quot;,
+      &quot;instagram&quot;: &quot;https://www.instagram.com/katzsdeli&quot;
+    },
+    &quot;personalEmailsOmitted&quot;: 0,
+    &quot;scrapedAt&quot;: &quot;2026-11-09T22:19:09.033Z&quot;
+  }
+]</code></pre>
+<p class="muted">Real run on Apify on 2026-11-09 (3 results). cafetortoni.com.ar did not respond during this run and returned no row (failed sites are not charged).</p>
+<section class="scroll" aria-label="Rows from the same run" tabindex="0"><table><caption>Rows from the same run</caption><thead><tr><th scope="col">Domain</th><th scope="col">Emails found</th><th scope="col">Phone</th><th scope="col">Social profiles</th></tr></thead><tbody><tr><td>katzsdelicatessen.com</td><td>press@katzsdelicatessen.com, sales@katzsdelicatessen.com</td><td>+12122542246</td><td>X, Facebook, Instagram</td></tr><tr><td>russanddaughters.com</td><td>info@russanddaughters.com</td><td>+12124754880</td><td>Instagram, TikTok</td></tr><tr><td>tartinebakery.com</td><td>info@tartinebakery.com, press@tartinebakery.com, privacy@tartinebakery.com</td><td>—</td><td>Facebook, Instagram</td></tr></tbody></table></section>
+
+<h2>What you get</h2>
+<section class="scroll" aria-label="What you get" tabindex="0"><table><caption>What you get</caption><thead><tr><th scope="col">Field</th><th scope="col">What it is</th></tr></thead><tbody><tr><td>companyName, description, country, language</td><td>who the company is</td></tr><tr><td>emails</td><td>generic and role inboxes (info@, sales@, press@) with the page where each was found; personal emails are left out by default</td></tr><tr><td>phones, primaryPhone</td><td>phone numbers in E.164 format, when the site publishes them</td></tr><tr><td>address</td><td>postal address, when the site publishes it</td></tr><tr><td>socialProfiles</td><td>LinkedIn, X, Facebook, Instagram, YouTube, TikTok, GitHub and more, when linked from the site</td></tr><tr><td>technologies</td><td>tech stack detected on the site (CMS, analytics, CRM and marketing tools, frameworks, CDN)</td></tr><tr><td>hiring</td><td>careers page, the hiring system it uses and the open roles count when the job board is public</td></tr></tbody></table></section>
+
+<h2>How to use it</h2>
+<h3>In the Apify Store (no code)</h3>
+<ol><li>Start with the <a href="https://apify.com/cleanyield/company-enrichment-from-website-lite">free Lite version</a> (up to 25 results per run, no per-result fee), or open the <a href="https://apify.com/cleanyield/company-enrichment-from-website">full version</a>, and click <strong>Try for free</strong> (Apify account, free plan included).</li><li>Paste your list in the form, or use the input above.</li><li>Click <strong>Start</strong> and download the results as JSON, CSV or Excel.</li></ol>
+<h3>From your code (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~company-enrichment-from-website/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;domains&quot;: [
+    &quot;katzsdelicatessen.com&quot;,
+    &quot;tartinebakery.com&quot;,
+    &quot;russanddaughters.com&quot;,
+    &quot;cafetortoni.com.ar&quot;
+  ],
+  &quot;sections&quot;: [
+    &quot;contacts&quot;,
+    &quot;social&quot;
+  ]
+}'</code></pre>
+<p class="muted">Create an API token in Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> caps what the run can cost; the run stops there.</p>
+<h3>n8n and Make</h3>
+<p>In n8n, add the official Apify node; in Make, use the Apify app. Choose the Actor <code>cleanyield/company-enrichment-from-website</code>, paste the input JSON above, and read the dataset items in the next step. You can also schedule the Actor in Apify and send the results to a webhook, Google Sheets or Slack.</p>
+
+<h2 id="price">Price</h2>
+<dl class="price">
+<dt>Today</dt><dd>USD 10 per 1,000 companies (USD 0.01 per company returned) on the Apify Free plan; Apify subscribers pay less (Gold: USD 7 per 1,000).</dd>
+<dt>From November 24, 2026</dt><dd>The Gold tier moves to USD 7.50 per 1,000, and monitor mode adds USD 0.005 per watched company per monitor run (today monitor mode charges only new or changed companies).</dd>
+</dl>
+<p>Optional Pro mode: + USD 0.02 per company (buying intent score, size, fit, why now). Sites that are down, parked or blocked are not charged.</p>
+<p>Free Lite version: no per-result fee, up to 25 companies per run (only Apify platform usage applies).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/company-enrichment-from-website-lite">Try the free Lite version first</a> <a class="btn ghost" href="https://apify.com/cleanyield/company-enrichment-from-website">Full version in the Apify Store</a></p>
+</article>
+<nav aria-label="Related pages"><h2>Related pages</h2><ul><li><a href="../company-enrichment-api/">Company enrichment API</a></li></ul></nav>
+<nav aria-label="Other data tools by Clean Yield"><h2>Other data tools by Clean Yield</h2><ul><li><a href="../greenhouse-jobs-api/">ATS Jobs Scraper</a></li><li><a href="../fmcsa-carrier-lookup-api/">FMCSA Carrier Data</a></li><li><a href="../app-store-reviews-api/">App Store &amp; Google Play Reviews Scraper</a></li><li><a href="../licitaciones-publicas-api/">Latin America Public Tenders</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Updated 2026-11-09</p><p class="muted">Clean Yield is an independent publisher on Apify. Product names are trademarks of their owners and are used only to describe compatibility.</p></div></footer>
+</body>
+</html>

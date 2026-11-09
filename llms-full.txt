@@ -1,0 +1,434 @@
+# Clean Yield — full reference
+
+Updated 2026-11-09. Prices are for the Apify Free plan unless stated; "today" is the price charged now and "from November 24, 2026" is a scheduled change announced with Apify's 14-day notice.
+
+## Company Enrichment from Website
+
+Store page: https://apify.com/cleanyield/company-enrichment-from-website
+Try the free Lite version first: https://apify.com/cleanyield/company-enrichment-from-website-lite
+API actor ID: cleanyield/company-enrichment-from-website
+
+Turns a list of company websites or domains into one row per company with contact emails, phone numbers and address when the site publishes them, LinkedIn and social profiles, the tech stack the site runs on and hiring signals.
+
+Input: domains (or full website URLs); optional sections, maxPagesPerDomain, includePersonalEmails.
+
+Output (one row per company):
+- companyName, description, country, language: who the company is
+- emails: generic and role inboxes (info@, sales@, press@) with the page where each was found; personal emails are left out by default
+- phones, primaryPhone: phone numbers in E.164 format, when the site publishes them
+- address: postal address, when the site publishes it
+- socialProfiles: LinkedIn, X, Facebook, Instagram, YouTube, TikTok, GitHub and more, when linked from the site
+- technologies: tech stack detected on the site (CMS, analytics, CRM and marketing tools, frameworks, CDN)
+- hiring: careers page, the hiring system it uses and the open roles count when the job board is public
+
+Price today: USD 10 per 1,000 companies (USD 0.01 per company returned) on the Apify Free plan; Apify subscribers pay less (Gold: USD 7 per 1,000).
+From November 24, 2026: The Gold tier moves to USD 7.50 per 1,000, and monitor mode adds USD 0.005 per watched company per monitor run (today monitor mode charges only new or changed companies).
+Optional Pro mode: + USD 0.02 per company (buying intent score, size, fit, why now). Sites that are down, parked or blocked are not charged.
+Free Lite version: no per-result fee, up to 25 companies per run (only Apify platform usage applies).
+
+Real example (run on Apify on 2026-11-09, 3 results; cafetortoni.com.ar did not respond during this run and returned no row (failed sites are not charged).)
+
+Input:
+```json
+{
+  "domains": [
+    "totvs.com",
+    "cafetortoni.com.ar",
+    "liverpool.com.mx",
+    "vercel.com"
+  ]
+}
+```
+
+Output (selected fields):
+```json
+[
+  {
+    "domain": "totvs.com",
+    "companyName": "TOTVS",
+    "country": "BR",
+    "primaryEmail": "sp.cloud.csirt@totvs.com.br",
+    "primaryPhone": "+558007098100",
+    "socialProfiles": {
+      "linkedin": "https://www.linkedin.com/company/totvs",
+      "x": "https://x.com/totvs",
+      "facebook": "https://www.facebook.com/totvs",
+      "instagram": "https://www.instagram.com/totvs",
+      "youtube": "https://www.youtube.com/totvs"
+    },
+    "technologies": [
+      "WordPress",
+      "HubSpot",
+      "RD Station",
+      "Google Tag Manager",
+      "Microsoft Clarity",
+      "Meta Pixel",
+      "jQuery",
+      "Cloudflare"
+    ],
+    "hiring": {
+      "isHiring": true,
+      "careersUrl": "https://www.totvs.com/trabalhe-conosco/",
+      "atsProvider": null,
+      "openRolesCount": null
+    },
+    "scrapedAt": "2026-11-09T22:19:10.492Z"
+  }
+]
+```
+
+API call:
+```bash
+curl -X POST "https://api.apify.com/v2/acts/cleanyield~company-enrichment-from-website/run-sync-get-dataset-items?maxTotalChargeUsd=1" -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" -d '{"domains":["totvs.com","cafetortoni.com.ar","liverpool.com.mx","vercel.com"]}'
+```
+
+Use-case pages: https://cleanyield-data.github.io/company-enrichment-api/, https://cleanyield-data.github.io/find-company-emails-from-website/
+
+## ATS Jobs Scraper
+
+Store page: https://apify.com/cleanyield/ats-jobs-scraper
+Try the free Lite version first: https://apify.com/cleanyield/ats-jobs-scraper-lite
+API actor ID: cleanyield/ats-jobs-scraper
+
+Returns the live open jobs of any company straight from its own careers page on Greenhouse, Lever, Ashby, Workday, Recruitee, Personio or Teamtailor, in one format, with no expired listings.
+
+Input: companies (names, board tokens or careers page URLs); optional keywords, locations, workplaceTypes, postedWithinDays, maxJobsPerCompany.
+
+Output (one row per job):
+- title, department, company: the job and who is hiring
+- location, city, countryCode, workplaceType: where, and whether it is remote, hybrid or onsite
+- employmentType: full-time, part-time, contract or internship, when the posting states it
+- salaryAnnualMin, salaryAnnualMax, salaryCurrency, salaryText: salary range when the company posts one (roughly half of jobs, depending on the company)
+- postedAt, url, applyUrl: posting date and direct links to the job and the application form
+- descriptionText / descriptionHtml: full job description, optional
+
+Price today: USD 2 per 1,000 jobs (USD 0.002 per job) plus USD 0.005 per run, on the Apify Free plan; Silver and Gold subscribers pay USD 1.20 per 1,000.
+From November 24, 2026: USD 5 per 1,000 jobs (USD 0.005 per job) plus USD 0.005 per run; Silver and Gold USD 3 per 1,000.
+Optional: monitor mode USD 0.004 per company checked, Pro mode + USD 0.005 per job, company details + USD 0.01 per company. Companies not found and failed requests are not charged.
+Free Lite version: no per-result fee, up to 25 jobs per run (only Apify platform usage applies).
+
+Real example (run on Apify on 2026-11-09, 10 results; 6 of the 10 jobs in this run include a salary range; the rest leave salary fields empty because the posting has none.)
+
+Input:
+```json
+{
+  "companies": [
+    "anthropic"
+  ],
+  "maxJobsPerCompany": 10,
+  "includeDescription": "none"
+}
+```
+
+Output (selected fields):
+```json
+[
+  {
+    "jobId": "greenhouse:anthropic:5476704008",
+    "ats": "greenhouse",
+    "company": "Anthropic",
+    "title": "Recruiter, Communications",
+    "department": "People",
+    "location": "San Francisco, CA | New York City, NY",
+    "countryCode": "US",
+    "workplaceType": "onsite",
+    "employmentType": null,
+    "salaryAnnualMin": 240000,
+    "salaryAnnualMax": 295000,
+    "salaryCurrency": "USD",
+    "salaryText": "Annual Salary: USD 240,000–295,000",
+    "postedAt": "2026-11-09T14:22:17.000Z",
+    "applyUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5476704008"
+  },
+  {
+    "jobId": "greenhouse:anthropic:5476577008",
+    "ats": "greenhouse",
+    "company": "Anthropic",
+    "title": "Applied AI Architect",
+    "department": "Applied AI",
+    "location": "Seoul, South Korea",
+    "countryCode": "KR",
+    "workplaceType": "onsite",
+    "employmentType": null,
+    "salaryAnnualMin": null,
+    "salaryAnnualMax": null,
+    "salaryCurrency": null,
+    "salaryText": null,
+    "postedAt": "2026-11-09T06:47:38.000Z",
+    "applyUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5476577008"
+  }
+]
+```
+
+API call:
+```bash
+curl -X POST "https://api.apify.com/v2/acts/cleanyield~ats-jobs-scraper/run-sync-get-dataset-items?maxTotalChargeUsd=1" -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" -d '{"companies":["anthropic"],"maxJobsPerCompany":10,"includeDescription":"none"}'
+```
+
+Use-case pages: https://cleanyield-data.github.io/greenhouse-jobs-api/, https://cleanyield-data.github.io/workday-jobs-scraper/, https://cleanyield-data.github.io/job-postings-data-api/
+
+## FMCSA Carrier Data
+
+Store page: https://apify.com/cleanyield/fmcsa-carrier-data
+Try the free Lite version first: https://apify.com/cleanyield/fmcsa-carrier-data-lite
+API actor ID: cleanyield/fmcsa-carrier-data
+
+Looks up US trucking companies by USDOT or MC number, or lists carriers by state, city, ZIP code or radius, including the ones that registered in the last days, from official FMCSA data.
+
+Input: dotNumbers or mcNumbers; or states, cities, zipCodes, nearLocation + radiusMiles, addedWithinDays, entityTypes.
+
+Output (one row per carrier):
+- dotNumber, mcNumbers, legalName, companyName: who the carrier is
+- usdotStatus, authorityStatus, authority: USDOT status and each operating authority with its status and dates
+- insurancePolicies, insuranceSummary: insurer, coverage and effective dates on file
+- safety, safetyRating, outOfService: inspections, crashes, out-of-service rates and safety rating
+- powerUnits, drivers, cargoCarried, physicalAddress: fleet size, cargo and address
+- phone, email: phone, and email when on file with FMCSA
+- leadScore, leadTier: a 0–100 lead score with the reasons behind it
+
+Price today: USD 5 per 1,000 carriers (USD 0.005 per carrier) on the Apify Free plan; Apify subscribers pay less (Gold: USD 3.50 per 1,000).
+From November 24, 2026: Monitor mode adds USD 0.001 per watched carrier per monitor run (today monitor mode charges only new or changed carriers). The price per carrier does not change.
+Optional: Pro mode + USD 0.005 per carrier, company website contacts + USD 0.01 per website read. Numbers that do not exist and incomplete records are not charged.
+Free Lite version: no per-result fee, up to 25 carriers per run (only Apify platform usage applies).
+
+Real example (run on Apify on 2026-11-09, 3 results; Shortened: the full record also has email when on file, fleet equipment, inspections, crashes, authority history and more. The email on file is omitted on this page.)
+
+Input:
+```json
+{
+  "dotNumbers": [
+    "80806",
+    "53467",
+    "264184"
+  ]
+}
+```
+
+Output (selected fields):
+```json
+[
+  {
+    "dotNumber": "80806",
+    "mcNumbers": [
+      "MC-135797"
+    ],
+    "legalName": "J B HUNT TRANSPORT INC",
+    "companyName": "J B Hunt",
+    "usdotStatus": "active",
+    "authorityStatus": "active",
+    "carrierOperation": "interstate",
+    "powerUnits": 25280,
+    "drivers": 24116,
+    "physicalAddress": {
+      "city": "LOWELL",
+      "state": "AR",
+      "oneLine": "615 J B HUNT CORPORATE DRIVE, LOWELL, AR 72745, US"
+    },
+    "phone": "+14798200000",
+    "safetyRating": "satisfactory",
+    "insurancePolicies": [
+      {
+        "insuranceType": "bipd",
+        "layer": "excess",
+        "insurer": "Ace American Insurance Company",
+        "coverageUsd": 2500000,
+        "effectiveDate": "2025-12-31"
+      },
+      {
+        "insuranceType": "cargo",
+        "layer": "primary",
+        "insurer": "Travelers Casualty and Surety Company of America",
+        "coverageUsd": 5000,
+        "effectiveDate": "2023-10-23"
+      }
+    ],
+    "leadScore": 38,
+    "leadTier": "cold",
+    "scrapedAt": "2026-11-09T22:19:06.115Z"
+  }
+]
+```
+
+API call:
+```bash
+curl -X POST "https://api.apify.com/v2/acts/cleanyield~fmcsa-carrier-data/run-sync-get-dataset-items?maxTotalChargeUsd=1" -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" -d '{"dotNumbers":["80806","53467","264184"]}'
+```
+
+Use-case pages: https://cleanyield-data.github.io/fmcsa-carrier-lookup-api/
+
+## App Store & Google Play Reviews Scraper
+
+Store page: https://apify.com/cleanyield/app-store-google-play-reviews
+Try the free Lite version first: https://apify.com/cleanyield/app-store-google-play-reviews-lite
+API actor ID: cleanyield/app-store-google-play-reviews
+
+Returns the reviews of any iPhone (App Store) or Android (Google Play) app in one format, for any country and language, with filters by rating, date and keyword.
+
+Input: apps (App Store or Google Play links or IDs); optional countries, languages, maxReviewsPerApp, minRating, maxRating, reviewsSince, keywords.
+
+Output (one row per review):
+- store, appName, appId: which store and app
+- rating, title, text: stars, review title (App Store) and review text
+- date, appVersion: when it was written and the app version reviewed, when the store shows it
+- country, language: the storefront country or review language you asked for
+- developerReply: the developer reply with its date (Google Play)
+- url, thumbsUp: link to the review and helpful votes
+
+Price today: USD 0.10 per 1,000 reviews (10,000 reviews = USD 1) on the Apify Free plan; subscribers pay slightly less.
+From November 24, 2026: Monitor mode checks cost USD 0.01 per app per monitor run (USD 0.005 today). The price per review does not change.
+Optional: alerts add-on USD 0.01 per app with enough data, Pro mode + USD 2 per 1,000 reviews. Failed or incomplete reviews are not charged.
+Free Lite version: no per-result fee, up to 25 reviews per run (only Apify platform usage applies).
+
+Real example (run on Apify on 2026-11-09, 30 results; 30 reviews returned, all 1–2 stars as requested.)
+
+Input:
+```json
+{
+  "apps": [
+    "https://apps.apple.com/us/app/netflix/id363590051"
+  ],
+  "countries": [
+    "us"
+  ],
+  "maxRating": 2,
+  "maxReviewsPerApp": 30
+}
+```
+
+Output (selected fields):
+```json
+[
+  {
+    "store": "appstore",
+    "appName": "Netflix",
+    "country": "US",
+    "language": null,
+    "rating": 2,
+    "title": "Too many ads",
+    "text": "I pay for the app. I should not have to watch ads.",
+    "date": "2026-11-08T15:01:58.000Z",
+    "appVersion": "26.4.0",
+    "developerReply": null
+  },
+  {
+    "store": "appstore",
+    "appName": "Netflix",
+    "country": "US",
+    "language": null,
+    "rating": 1,
+    "title": "Unauthorized charge",
+    "text": "Canceled my plan two months in a row and I’ve gotten billed two months in a row. This is fraud and will be reporting to the FTC",
+    "date": "2026-11-08T16:40:42.000Z",
+    "appVersion": "26.4.0",
+    "developerReply": null
+  }
+]
+```
+
+API call:
+```bash
+curl -X POST "https://api.apify.com/v2/acts/cleanyield~app-store-google-play-reviews/run-sync-get-dataset-items?maxTotalChargeUsd=1" -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" -d '{"apps":["https://apps.apple.com/us/app/netflix/id363590051"],"countries":["us"],"maxRating":2,"maxReviewsPerApp":30}'
+```
+
+Use-case pages: https://cleanyield-data.github.io/app-store-reviews-api/, https://cleanyield-data.github.io/google-play-reviews-scraper/
+
+## Latin America Public Tenders
+
+Store page: https://apify.com/cleanyield/latam-public-tenders
+Try the free Lite version first: https://apify.com/cleanyield/latam-public-tenders-lite
+API actor ID: cleanyield/latam-public-tenders
+
+Returns public tenders from Colombia (SECOP), Brazil (PNCP), Chile (Mercado Público) and Paraguay (DNCP) in one format, with an English title, the amount in USD when the tender states one, the buyer and the bid deadline.
+
+Input: countries, sectors or keywords, status; optional publishedWithinDays, minAmountUsd, buyers, tenderIds.
+
+Output (one row per tender):
+- tenderId, country, source, url: the tender and a link to the official notice
+- title, titleEn, description: original title and an English translation
+- buyer: buying agency with city and region
+- amount (value, currency, valueUsd): estimated amount in local currency and USD, when the tender states one
+- status, procedureType: open, closed or awarded, and the type of procedure
+- publishedDate, closingDate: publication date and bid deadline
+- awardees: winner and awarded amount, if awarded
+
+Price today: USD 8 per 1,000 tenders (USD 0.008 per tender) on the Apify Free plan; Apify subscribers pay less (Gold: USD 6.20 per 1,000).
+Optional Pro mode: + USD 0.006 per tender (fit score, urgency, buyer profile). Tender IDs that do not exist and incomplete records are not charged.
+Free Lite version: no per-result fee, up to 25 tenders per run (only Apify platform usage applies).
+
+Real example (run on Apify on 2026-11-09, 15 results; 15 open IT and software tenders: 7 from Colombia, 5 from Brazil and 3 from Chile; 13 of the 15 state an amount.)
+
+Input:
+```json
+{
+  "countries": [
+    "CO",
+    "BR",
+    "CL"
+  ],
+  "sectors": [
+    "it-software"
+  ],
+  "status": [
+    "open"
+  ],
+  "publishedWithinDays": 5,
+  "maxResults": 15
+}
+```
+
+Output (selected fields):
+```json
+[
+  {
+    "tenderId": "CO:secop2:CO1.REQ.11294599",
+    "country": "CO",
+    "source": "secop2",
+    "title": "Renovación de licenciamiento y soporte de los dispositivos de seguridad perimetral, así como de las suscripciones de email security, EDR integrable con los dispositivos de seguridad del IDEP.",
+    "titleEn": "Renewal of licensing and support for perimeter security devices, as well as email security subscriptions and EDR integrable with IDEP security devices.",
+    "buyer": {
+      "name": "IDEP",
+      "city": "Bogotá",
+      "region": "Distrito Capital de Bogotá"
+    },
+    "procedureType": "reverse-auction",
+    "status": "open",
+    "amount": {
+      "value": 140585370,
+      "currency": "COP",
+      "valueUsd": 43343.07
+    },
+    "publishedDate": "2026-11-06",
+    "closingDate": "2026-11-26",
+    "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.11193044"
+  },
+  {
+    "tenderId": "CL:mercadopublico:4469-239-LE26",
+    "country": "CL",
+    "source": "mercadopublico",
+    "title": "S.C. N° 40669 U.F. LICENCIAS ZOOM PARA 12 MESES. INFORMATICA UPLA. AIUE 2655.",
+    "titleEn": "S.C. No. 40669 (U.F.) ZOOM LICENSES FOR 12 MONTHS. UPLA IT DEPARTMENT. AIUE 2655.",
+    "buyer": {
+      "name": "UNIVERSIDAD DE PLAYA ANCHA DE CIENCIAS DE LA EDUCACION",
+      "city": null,
+      "region": "Región de Valparaíso"
+    },
+    "procedureType": "public-tender",
+    "status": "open",
+    "amount": {
+      "value": 15537108,
+      "currency": "CLP",
+      "valueUsd": 15896.21
+    },
+    "publishedDate": "2026-11-09",
+    "closingDate": "2026-11-19",
+    "url": "https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=4469-239-LE26"
+  }
+]
+```
+
+API call:
+```bash
+curl -X POST "https://api.apify.com/v2/acts/cleanyield~latam-public-tenders/run-sync-get-dataset-items?maxTotalChargeUsd=1" -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" -d '{"countries":["CO","BR","CL"],"sectors":["it-software"],"status":["open"],"publishedWithinDays":5,"maxResults":15}'
+```
+
+Use-case pages: https://cleanyield-data.github.io/licitaciones-publicas-api/
