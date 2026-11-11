@@ -90,7 +90,7 @@ Store page: https://apify.com/cleanyield/ats-jobs-scraper
 Try the Lite version first (no per-result charge): https://apify.com/cleanyield/ats-jobs-scraper-lite
 API actor ID: cleanyield/ats-jobs-scraper
 
-Returns the live open jobs of any company straight from its own careers page on 19 hiring systems (Greenhouse, Lever, Ashby, Workday, Oracle Recruiting Cloud, Eightfold, Phenom, SuccessFactors, iCIMS, Recruitee, Personio, Teamtailor and more), in one format, with no expired listings. Measured on 2026-11-11 on a sample of 286 companies (Fortune 500, scale-ups, healthcare, industry and retail in the US, Europe and Latin America), it reads the jobs of 71.7% of them (205) from their website alone.
+Returns the live open jobs of any company straight from its own careers page on 19 hiring systems (Greenhouse, Lever, Ashby, Workday, Oracle Recruiting Cloud, Eightfold, Phenom, SuccessFactors, iCIMS, Recruitee, Personio, Teamtailor and more), in one format, with no expired listings. Coverage, two numbers measured on 2026-11-11: on a fixed sample of 286 well-known companies (mostly mid-size and large: Fortune 500, scale-ups, healthcare, industry and retail in the US, Europe and Latin America) it reads the jobs of 72.7% (208) from their website alone; on a broader random sample of 1,000 companies (many small, plus Europe and Latin America) it reads 40.1% of those with a visible careers page (27.2% of all reachable ones), about 55% of US mid-size and large companies but under 10% of small ones.
 
 Input: companies (names, board tokens or careers page URLs); optional keywords, locations, workplaceTypes, postedWithinDays, maxJobsPerCompany.
 
