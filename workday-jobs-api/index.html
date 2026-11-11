@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workday Jobs API: How to Get Job Postings from Workday</title>
+<meta name="description" content="How to get job postings from a Workday careers site: the public JSON endpoint its pages use, its limits, a real example from 2026-11-11 and an easier way.">
+<link rel="canonical" href="https://cleanyield-data.github.io/workday-jobs-api/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Workday Jobs API: How to Get Job Postings from Workday">
+<meta property="og:description" content="How to get job postings from a Workday careers site: the public JSON endpoint its pages use, its limits, a real example from 2026-11-11 and an easier way.">
+<meta property="og:url" content="https://cleanyield-data.github.io/workday-jobs-api/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"How to get job postings from Workday","acceptedAnswer":{"@type":"Answer","text":"Workday has no documented public jobs API, but every myworkdayjobs.com careers site loads its list from a public JSON endpoint: POST https://{tenant}.wdN.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs, 20 jobs per page. To skip the paging, the relative dates and one extra request per job, paste the careers site URL into Clean Yield’s ATS Jobs Scraper and get clean rows with exact posting dates."}},{"@type":"Question","name":"Is there an official Workday jobs API?","acceptedAnswer":{"@type":"Answer","text":"Workday’s official APIs are for the company’s own HR data and need its credentials. Public careers sites have no documented API; their pages use the JSON endpoint above."}},{"@type":"Question","name":"Does a company name work, or do I need the URL?","acceptedAnswer":{"@type":"Answer","text":"For Workday the Actor needs the careers site URL or the company website (for example nvidia.com); a bare name is not enough."}},{"@type":"Question","name":"Why is salary empty?","acceptedAnswer":{"@type":"Answer","text":"Workday has no salary field. The Actor fills it only when the posting text states a range, which is common for US roles and rare elsewhere."}}]},{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ATS Jobs Scraper","description":"How to get job postings from a Workday careers site: the public JSON endpoint its pages use, its limits, a real example from 2026-11-11 and an easier way.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/ats-jobs-scraper","mainEntityOfPage":"https://cleanyield-data.github.io/workday-jobs-api/","inLanguage":"en","offers":{"@type":"Offer","price":"0.002","priceCurrency":"USD","description":"USD 0.002 per job returned plus USD 0.005 per run until November 23, 2026; USD 0.005 per job plus USD 0.005 per run from November 24, 2026 (Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}]</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+<article>
+<h1>How to get job postings from Workday</h1>
+<p class="answer"><strong>Short answer:</strong> Workday has no documented public jobs API, but every myworkdayjobs.com careers site loads its list from a public JSON endpoint: POST https://{tenant}.wdN.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs, 20 jobs per page. To skip the paging, the relative dates and one extra request per job, paste the careers site URL into Clean Yield’s ATS Jobs Scraper and get clean rows with exact posting dates.</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/ats-jobs-scraper-lite">Try the Lite version first (no per-result charge)</a> <a class="btn ghost" href="https://apify.com/cleanyield/ats-jobs-scraper">Full version in the Apify Store</a></p>
+
+<h2>Real example from our run on 2026-11-11</h2>
+<p>NVIDIA’s Workday careers site, 10 newest jobs. Two shown in full, all 10 in the table.</p>
+<h3>Input</h3>
+<pre><code>{
+  &quot;companies&quot;: [
+    &quot;https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite&quot;
+  ],
+  &quot;maxJobsPerCompany&quot;: 10,
+  &quot;includeDescription&quot;: &quot;none&quot;
+}</code></pre>
+<h3>Output (selected fields)</h3>
+<pre><code>[
+  {
+    &quot;company&quot;: &quot;Nvidia&quot;,
+    &quot;ats&quot;: &quot;workday&quot;,
+    &quot;title&quot;: &quot;Technical Program Manager, Deep Learning Enterprise Server Software (RDSS Intern)&quot;,
+    &quot;department&quot;: null,
+    &quot;location&quot;: &quot;Taiwan, Taipei&quot;,
+    &quot;workplaceType&quot;: null,
+    &quot;employmentType&quot;: &quot;internship&quot;,
+    &quot;salaryAnnualMin&quot;: null,
+    &quot;salaryAnnualMax&quot;: null,
+    &quot;salaryCurrency&quot;: null,
+    &quot;salaryText&quot;: null,
+    &quot;postedAt&quot;: &quot;2026-11-11T00:00:00.000Z&quot;,
+    &quot;url&quot;: &quot;https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/Taiwan-Taipei/Technical-Program-Manager--Deep-Learning-Enterprise-Server-Software--RDSS-Intern-_JR2029595&quot;
+  },
+  {
+    &quot;company&quot;: &quot;Nvidia&quot;,
+    &quot;ats&quot;: &quot;workday&quot;,
+    &quot;title&quot;: &quot;Product and Program Operations Manager&quot;,
+    &quot;department&quot;: null,
+    &quot;location&quot;: &quot;US, CA, Santa Clara&quot;,
+    &quot;workplaceType&quot;: null,
+    &quot;employmentType&quot;: &quot;full_time&quot;,
+    &quot;salaryAnnualMin&quot;: null,
+    &quot;salaryAnnualMax&quot;: null,
+    &quot;salaryCurrency&quot;: null,
+    &quot;salaryText&quot;: null,
+    &quot;postedAt&quot;: &quot;2026-11-11T00:00:00.000Z&quot;,
+    &quot;url&quot;: &quot;https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/US-CA-Santa-Clara/Product-and-Program-Operations-Manager_JR2029905&quot;
+  }
+]</code></pre>
+<p class="muted">Run of the Actor's current code on 2026-11-11 (local run with the same code as the version published on Apify; 10 results). None of these 10 Workday postings stated a salary, so the salary fields are empty.</p>
+<section class="scroll" aria-label="Rows from the same run" tabindex="0"><table><caption>Rows from the same run</caption><thead><tr><th scope="col">Job title</th><th scope="col">Location</th><th scope="col">Workplace</th><th scope="col">Salary (annual)</th><th scope="col">Posted</th></tr></thead><tbody><tr><td>Technical Program Manager, Deep Learning Enterprise Server Software (RDSS Intern)</td><td>Taiwan, Taipei</td><td></td><td>—</td><td>2026-11-11</td></tr><tr><td>ASIC Design Engineer, GPU Core Pipeline IP</td><td>India, Bengaluru</td><td></td><td>—</td><td>2026-11-11</td></tr><tr><td>Senior Customer Program Manager - OEMs</td><td>Israel, Tel Aviv</td><td></td><td>—</td><td>2026-11-11</td></tr><tr><td>Developer Technology Engineer Intern</td><td>Japan, Tokyo</td><td></td><td>—</td><td>2026-11-11</td></tr><tr><td>Software Engineering Student</td><td>Israel, Yokneam</td><td></td><td>—</td><td>2026-11-11</td></tr><tr><td>Product and Program Operations Manager</td><td>US, CA, Santa Clara</td><td></td><td>—</td><td>2026-11-11</td></tr><tr><td>GPU Compiler Intern</td><td>Switzerland, Zurich</td><td></td><td>—</td><td>2026-11-11</td></tr><tr><td>Go-to-Market Strategy Intern</td><td>France, Courbevoie</td><td>remote</td><td>—</td><td>2026-11-11</td></tr><tr><td>System Software Engineering Intern - 2027</td><td>Finland, Helsinki</td><td></td><td>—</td><td>2026-11-11</td></tr><tr><td>Electro Optics Student</td><td>Israel, Yokneam</td><td></td><td>—</td><td>2026-11-11</td></tr></tbody></table></section>
+
+<h2>Fields you get</h2>
+<section class="scroll" aria-label="Fields you get" tabindex="0"><table><caption>Fields you get</caption><thead><tr><th scope="col">Field</th><th scope="col">What it is</th></tr></thead><tbody><tr><td>title, company, ats</td><td>the job and who is hiring</td></tr><tr><td>location, city, countryCode, workplaceType</td><td>where, and remote, hybrid or onsite when the posting says it</td></tr><tr><td>employmentType</td><td>full-time, part-time, contract or internship, when stated</td></tr><tr><td>salaryAnnualMin, salaryAnnualMax, salaryCurrency, salaryText</td><td>only when the posting text states a range; Workday has no salary field (0 of 10 in this run)</td></tr><tr><td>postedAt</td><td>exact posting date, not &quot;Posted 3 Days Ago&quot;</td></tr><tr><td>url, applyUrl</td><td>the job page and the application link</td></tr></tbody></table></section>
+
+<h2>Do it yourself with the official source</h2>
+<p>The tenant, the wdN host and the site name are all in the careers site URL (here nvidia, wd5 and NVIDIAExternalCareerSite).</p>
+<pre><code>curl -X POST &quot;https://nvidia.wd5.myworkdayjobs.com/wday/cxs/nvidia/NVIDIAExternalCareerSite/jobs&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;appliedFacets&quot;:{},&quot;limit&quot;:20,&quot;offset&quot;:0,&quot;searchText&quot;:&quot;&quot;}'</code></pre>
+<h3>What you have to handle yourself</h3>
+<ul><li>At most 20 jobs per request, so large employers need many pages.</li><li>The list gives &quot;Posted Today&quot; or &quot;Posted 30+ Days Ago&quot;, not a date; the date and description need one more request per job.</li><li>Undocumented: Workday can change it, and some tenants ask robots in robots.txt to stay out.</li></ul>
+
+<h2>When Clean Yield’s Actor saves time</h2>
+<ul><li>Paste the careers site URL or the company website; the tenant and site are found for you.</li><li>Exact posting dates, the location split into city and country, and salary when the text states one.</li><li>Follows each site’s robots.txt and pace; the run message says if a list was partial and why.</li><li>The same columns as Greenhouse, Lever, Oracle Recruiting Cloud, SuccessFactors and the other supported systems.</li></ul>
+<h3>From your code (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~ats-jobs-scraper/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;companies&quot;: [
+    &quot;https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite&quot;
+  ],
+  &quot;maxJobsPerCompany&quot;: 10,
+  &quot;includeDescription&quot;: &quot;none&quot;
+}'</code></pre>
+<p class="muted">Create an API token in Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> caps what the run can cost; the run stops there.</p>
+
+<h2 id="price">Price (charged today)</h2>
+<dl class="price">
+<dt>Today</dt><dd>USD 2 per 1,000 jobs (USD 0.002 per job) plus USD 0.005 per run, on the Apify Free plan; Silver and Gold subscribers pay USD 1.20 per 1,000.</dd>
+<dt>From November 24, 2026</dt><dd>USD 5 per 1,000 jobs (USD 0.005 per job) plus USD 0.005 per run; Silver and Gold USD 3 per 1,000.</dd>
+</dl>
+<p>Optional: monitor mode USD 0.004 per company checked, Pro mode + USD 0.005 per job, company details + USD 0.01 per company. Companies not found and failed requests are not charged.</p>
+<p>Lite version: no per-result charge, up to 25 jobs per run (only Apify platform usage applies).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/ats-jobs-scraper-lite">Try the Lite version first (no per-result charge)</a> <a class="btn ghost" href="https://apify.com/cleanyield/ats-jobs-scraper">Full version in the Apify Store</a></p>
+
+<h2>Questions</h2>
+<h3>Is there an official Workday jobs API?</h3>
+<p>Workday’s official APIs are for the company’s own HR data and need its credentials. Public careers sites have no documented API; their pages use the JSON endpoint above.</p>
+<h3>Does a company name work, or do I need the URL?</h3>
+<p>For Workday the Actor needs the careers site URL or the company website (for example nvidia.com); a bare name is not enough.</p>
+<h3>Why is salary empty?</h3>
+<p>Workday has no salary field. The Actor fills it only when the posting text states a range, which is common for US roles and rare elsewhere.</p>
+</article>
+<nav aria-label="Related pages"><h2>Related pages</h2><ul><li><a href="../workday-jobs-scraper/">Workday jobs scraper</a></li><li><a href="../greenhouse-job-board-api/">How to get job postings from the Greenhouse API</a></li><li><a href="../job-postings-data-api/">Job postings data API</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Updated 2026-11-11</p><p class="muted">Clean Yield is an independent publisher on Apify. Product names are trademarks of their owners and are used only to describe compatibility.</p></div></footer>
+</body>
+</html>

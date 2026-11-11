@@ -1,6 +1,6 @@
 # Clean Yield — full reference
 
-Updated 2026-11-09. Prices are for the Apify Free plan unless stated; "today" is the price charged now and "from November 24, 2026" is a scheduled change announced with Apify's 14-day notice.
+Updated 2026-11-11. Prices are for the Apify Free plan unless stated; "today" is the price charged now and "from November 24, 2026" is a scheduled change announced with Apify's 14-day notice.
 
 ## Company Enrichment from Website
 
@@ -8,9 +8,9 @@ Store page: https://apify.com/cleanyield/company-enrichment-from-website
 Try the Lite version first (no per-result charge): https://apify.com/cleanyield/company-enrichment-from-website-lite
 API actor ID: cleanyield/company-enrichment-from-website
 
-Turns a list of company websites or domains into one row per company with contact emails, phone numbers and address when the site publishes them, LinkedIn and social profiles, the tech stack the site runs on and hiring signals.
+Turns a list of company websites or domains, or a Google Maps export pasted as it is, into one row per company with contact emails, phone numbers and address when the site publishes them, LinkedIn and social profiles, the tech stack the site runs on and hiring signals. It reads only public pages of each company’s own site and respects robots.txt.
 
-Input: domains (or full website URLs); optional sections, maxPagesPerDomain, includePersonalEmails.
+Input: domains (or full website URLs), or rows / csvUrl / datasetId with a Google Maps export; optional sections, maxPagesPerDomain, includePersonalEmails.
 
 Output (one row per company):
 - companyName, description, country, language: who the company is
@@ -82,7 +82,7 @@ API call:
 curl -X POST "https://api.apify.com/v2/acts/cleanyield~company-enrichment-from-website/run-sync-get-dataset-items?maxTotalChargeUsd=1" -H "Authorization: Bearer $APIFY_TOKEN" -H "Content-Type: application/json" -d '{"domains":["totvs.com","cafetortoni.com.ar","liverpool.com.mx","vercel.com"]}'
 ```
 
-Use-case pages: https://cleanyield-data.github.io/company-enrichment-api/, https://cleanyield-data.github.io/find-company-emails-from-website/
+Use-case pages: https://cleanyield-data.github.io/company-enrichment-api/, https://cleanyield-data.github.io/find-company-emails-from-website/, https://cleanyield-data.github.io/google-maps-leads-enrichment/
 
 ## ATS Jobs Scraper
 
@@ -90,7 +90,7 @@ Store page: https://apify.com/cleanyield/ats-jobs-scraper
 Try the Lite version first (no per-result charge): https://apify.com/cleanyield/ats-jobs-scraper-lite
 API actor ID: cleanyield/ats-jobs-scraper
 
-Returns the live open jobs of any company straight from its own careers page on Greenhouse, Lever, Ashby, Workday, Recruitee, Personio or Teamtailor, in one format, with no expired listings.
+Returns the live open jobs of any company straight from its own careers page on 19 hiring systems (Greenhouse, Lever, Ashby, Workday, Oracle Recruiting Cloud, Eightfold, Phenom, SuccessFactors, iCIMS, Recruitee, Personio, Teamtailor and more), in one format, with no expired listings. Measured on 2026-11-11 on a sample of 286 companies (Fortune 500, scale-ups, healthcare, industry and retail in the US, Europe and Latin America), it reads the jobs of 71.7% of them (205) from their website alone.
 
 Input: companies (names, board tokens or careers page URLs); optional keywords, locations, workplaceTypes, postedWithinDays, maxJobsPerCompany.
 
@@ -173,7 +173,7 @@ Store page: https://apify.com/cleanyield/fmcsa-carrier-data
 Try the Lite version first (no per-result charge): https://apify.com/cleanyield/fmcsa-carrier-data-lite
 API actor ID: cleanyield/fmcsa-carrier-data
 
-Looks up US trucking companies by USDOT or MC number, or lists carriers by state, city, ZIP code or radius, including the ones that registered in the last days, from official FMCSA data.
+Looks up US trucking companies by USDOT or MC number, or lists carriers by state, city, ZIP code or radius, including the ones that registered in the last days, from official FMCSA data; statuses that may be out of date in the open data are re-checked live on SAFER.
 
 Input: dotNumbers or mcNumbers; or states, cities, zipCodes, nearLocation + radiusMiles, addedWithinDays, entityTypes.
 
@@ -432,3 +432,112 @@ curl -X POST "https://api.apify.com/v2/acts/cleanyield~latam-public-tenders/run-
 ```
 
 Use-case pages: https://cleanyield-data.github.io/licitaciones-publicas-api/
+
+## Direct answers
+
+### How to get job postings from the Greenhouse API
+
+https://cleanyield-data.github.io/greenhouse-job-board-api/
+
+Greenhouse publishes every company’s open jobs in a free Job Board API that needs no key: GET https://boards-api.greenhouse.io/v1/boards/{board_token}/jobs?content=true. For one company that is enough; for many companies, salaries as a yearly range and the same format as Lever, Workday and 16 other hiring systems, use Clean Yield’s ATS Jobs Scraper.
+
+Doing it yourself: One company, from the command line. The board token is the last part of job-boards.greenhouse.io/<token>; careers pages that embed Greenhouse show it as boards.greenhouse.io/embed/job_board?for=<token>.
+```
+curl "https://boards-api.greenhouse.io/v1/boards/airbnb/jobs?content=true&pay_transparency=true"
+```
+- One board per request, and you need the exact board token.
+- Pay ranges come only with pay_transparency=true and only when the company enables them, in cents and sometimes repeated per region.
+- Location is free text: there is no remote, hybrid or onsite field.
+- Lever, Ashby, Workday and the rest each have a different format.
+
+### How to get job postings from Workday
+
+https://cleanyield-data.github.io/workday-jobs-api/
+
+Workday has no documented public jobs API, but every myworkdayjobs.com careers site loads its list from a public JSON endpoint: POST https://{tenant}.wdN.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs, 20 jobs per page. To skip the paging, the relative dates and one extra request per job, paste the careers site URL into Clean Yield’s ATS Jobs Scraper and get clean rows with exact posting dates.
+
+Doing it yourself: The tenant, the wdN host and the site name are all in the careers site URL (here nvidia, wd5 and NVIDIAExternalCareerSite).
+```
+curl -X POST "https://nvidia.wd5.myworkdayjobs.com/wday/cxs/nvidia/NVIDIAExternalCareerSite/jobs" \
+  -H "Content-Type: application/json" \
+  -d '{"appliedFacets":{},"limit":20,"offset":0,"searchText":""}'
+```
+- At most 20 jobs per request, so large employers need many pages.
+- The list gives "Posted Today" or "Posted 30+ Days Ago", not a date; the date and description need one more request per job.
+- Undocumented: Workday can change it, and some tenants ask robots in robots.txt to stay out.
+
+### How to get job postings from the Lever API
+
+https://cleanyield-data.github.io/lever-postings-api/
+
+Lever’s public Postings API returns a company’s published jobs with no key: GET https://api.lever.co/v0/postings/{company}?mode=json (EU-hosted boards use api.eu.lever.co). Clean Yield’s ATS Jobs Scraper reads the same feed for many companies at once, at the 1 request per second Lever asks for, and returns the salary when stated in the same format as Greenhouse and Workday.
+
+Doing it yourself: The company slug is the part after jobs.lever.co/.
+```
+curl "https://api.lever.co/v0/postings/spotify?mode=json"
+```
+- One company per request, and the slug must be exact (EU boards answer on a different host).
+- Salary appears only when the company fills Lever’s salary range; ranges in the description are not parsed.
+- Dates are Unix milliseconds and the format differs from every other ATS.
+
+### How to look up an FMCSA carrier by MC number
+
+https://cleanyield-data.github.io/fmcsa-mc-number-lookup-api/
+
+For one carrier, search the MC number in FMCSA’s SAFER Company Snapshot (search by MC/MX number). For a list, or from code, Clean Yield’s FMCSA Carrier Lookup takes MC numbers and returns the USDOT number, legal name, authority status per docket, insurance on file and fleet size from FMCSA’s official data, re-checking statuses live on SAFER when the open data may be out of date.
+
+Doing it yourself: One carrier, no key needed (the same page you see in a browser):
+```
+https://safer.fmcsa.dot.gov/query.asp?searchtype=ANY&query_type=queryCarrierSnapshot&query_param=MC_MX&query_string=135797
+```
+- One carrier per page, in HTML: fine to check a carrier, slow for a list.
+- FMCSA’s open data (data.transportation.gov) is free, but the Company Census holds only three dockets per carrier: J.B. Hunt’s MC-135797 is not in its census row (checked 2026-11-11), so you also need the Motus authority dataset.
+- Insurance, authority, census and inspections are separate datasets you have to join yourself.
+
+### How to get public tenders from Colombia and Chile by API
+
+https://cleanyield-data.github.io/colombia-chile-public-tenders-api/
+
+Colombia publishes its tenders as open data on datos.gov.co (SECOP II) and Chile through Mercado Público’s open OCDS API; both are free, but fields, currencies and status names differ. Clean Yield’s Latin America Public Tenders returns both, plus Brazil, Paraguay and Uruguay (beta), in one format with the bid deadline, the amount in USD when the tender states one and a link to the official notice.
+
+Doing it yourself: Colombia (SECOP II processes, Socrata API) and Chile (OCDS list of the month), no registration:
+```
+curl -G "https://www.datos.gov.co/resource/p6dx-8zbt.json" \
+  --data-urlencode "\$where=estado_del_procedimiento='Publicado' AND fecha_de_publicacion_del >= '2026-11-09T00:00:00'" \
+  --data-urlencode "\$limit=50"
+curl "https://apis.mercadopublico.cl/OCDS/data/listaA%C3%B1oMes/2026/11/0/100"
+```
+- SECOP’s status column alone misleads: processes in "Evaluación" or "Aprobado" can still be open until their deadline, and direct contracts are mixed in.
+- Chile’s list returns only codes; each tender needs another request, and the open data can lag the portal by a few hours.
+- Amounts come in COP or CLP, with different field names in each country.
+
+### ¿Cómo obtener por API las licitaciones abiertas de Colombia (SECOP II)?
+
+https://cleanyield-data.github.io/licitaciones-colombia-secop-api/
+
+SECOP II publica sus procesos como datos abiertos en datos.gov.co (dataset p6dx-8zbt, API Socrata), gratis y sin registro. Si quieres solo las abiertas de verdad, con fecha de cierre, monto en pesos y en dólares y el link al aviso, en un formato listo para usar, la Licitaciones Públicas de Latinoamérica de Clean Yield lo hace en una corrida de segundos.
+
+Doing it yourself: Procesos publicados desde el 9/11, directo de la API de datos abiertos:
+```
+curl -G "https://www.datos.gov.co/resource/p6dx-8zbt.json" \
+  --data-urlencode "\$where=estado_del_procedimiento='Publicado' AND fecha_de_publicacion_del >= '2026-11-09T00:00:00'" \
+  --data-urlencode "\$limit=50"
+```
+- El estado solo engaña: hay procesos en "Evaluación" o "Aprobado" que siguen recibiendo ofertas hasta su fecha de cierre, y otros "Publicado" que ya cerraron.
+- Vienen mezcladas la contratación directa y los regímenes especiales, que no son licitaciones abiertas a cualquiera.
+- El monto viene como texto en pesos y el link al aviso, anidado.
+
+### ¿Cómo obtener las licitaciones de Mercado Público (Chile) por API sin ticket?
+
+https://cleanyield-data.github.io/licitaciones-chile-mercado-publico-api/
+
+La API clásica de Mercado Público pide un ticket, pero ChileCompra también publica las licitaciones en su API OCDS abierta (apis.mercadopublico.cl/OCDS), sin registro. La Licitaciones Públicas de Latinoamérica de Clean Yield la lee por ti y devuelve cada licitación con comprador y RUT, región, fecha de cierre y monto en pesos y en dólares cuando se informa.
+
+Doing it yourself: Lista de licitaciones del mes (códigos) y después el detalle de cada una:
+```
+curl "https://apis.mercadopublico.cl/OCDS/data/listaA%C3%B1oMes/2026/11/0/100"
+curl "https://apis.mercadopublico.cl/OCDS/data/tender/2318-86-LE26"
+```
+- La lista solo trae códigos: cada licitación es una consulta más (el 11/11 había más de 3.300 en el mes).
+- Los datos abiertos pueden ir unas horas atrás del portal.
+- Formato OCDS: el monto, las fechas y el comprador están en partes distintas del documento.

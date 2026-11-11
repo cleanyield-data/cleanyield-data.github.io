@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://cleanyield-data.github.io/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/company-enrichment-api/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/find-company-emails-from-website/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/greenhouse-jobs-api/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/workday-jobs-scraper/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/job-postings-data-api/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/fmcsa-carrier-lookup-api/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/app-store-reviews-api/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/google-play-reviews-scraper/</loc><lastmod>2026-11-09</lastmod></url>
-  <url><loc>https://cleanyield-data.github.io/licitaciones-publicas-api/</loc><lastmod>2026-11-09</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/company-enrichment-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/find-company-emails-from-website/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/greenhouse-jobs-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/workday-jobs-scraper/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/job-postings-data-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/fmcsa-carrier-lookup-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/app-store-reviews-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/google-play-reviews-scraper/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/licitaciones-publicas-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/google-maps-leads-enrichment/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/greenhouse-job-board-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/workday-jobs-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/lever-postings-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/fmcsa-mc-number-lookup-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/colombia-chile-public-tenders-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/licitaciones-colombia-secop-api/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://cleanyield-data.github.io/licitaciones-chile-mercado-publico-api/</loc><lastmod>2026-11-11</lastmod></url>
 </urlset>

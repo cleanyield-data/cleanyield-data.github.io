@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lever Postings API: Get a Company’s Jobs (Real Example)</title>
+<meta name="description" content="How to get job postings from the Lever Postings API: the free endpoint, EU boards, a real example from 2026-11-11 and how to pull many companies in one format.">
+<link rel="canonical" href="https://cleanyield-data.github.io/lever-postings-api/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lever Postings API: Get a Company’s Jobs (Real Example)">
+<meta property="og:description" content="How to get job postings from the Lever Postings API: the free endpoint, EU boards, a real example from 2026-11-11 and how to pull many companies in one format.">
+<meta property="og:url" content="https://cleanyield-data.github.io/lever-postings-api/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"How to get job postings from the Lever API","acceptedAnswer":{"@type":"Answer","text":"Lever’s public Postings API returns a company’s published jobs with no key: GET https://api.lever.co/v0/postings/{company}?mode=json (EU-hosted boards use api.eu.lever.co). Clean Yield’s ATS Jobs Scraper reads the same feed for many companies at once, at the 1 request per second Lever asks for, and returns the salary when stated in the same format as Greenhouse and Workday."}},{"@type":"Question","name":"Do I need an API key for Lever postings?","acceptedAnswer":{"@type":"Answer","text":"No. Published postings are public; Lever’s documentation says they may be read by third parties. Keys are only for a company’s own Lever account data."}},{"@type":"Question","name":"Does it support jobs.eu.lever.co?","acceptedAnswer":{"@type":"Answer","text":"Yes. Paste the EU URL; for a bare company name the EU host is tried automatically."}}]},{"@context":"https://schema.org","@type":"SoftwareApplication","name":"ATS Jobs Scraper","description":"How to get job postings from the Lever Postings API: the free endpoint, EU boards, a real example from 2026-11-11 and how to pull many companies in one format.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/ats-jobs-scraper","mainEntityOfPage":"https://cleanyield-data.github.io/lever-postings-api/","inLanguage":"en","offers":{"@type":"Offer","price":"0.002","priceCurrency":"USD","description":"USD 0.002 per job returned plus USD 0.005 per run until November 23, 2026; USD 0.005 per job plus USD 0.005 per run from November 24, 2026 (Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}]</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+<article>
+<h1>How to get job postings from the Lever API</h1>
+<p class="answer"><strong>Short answer:</strong> Lever’s public Postings API returns a company’s published jobs with no key: GET https://api.lever.co/v0/postings/{company}?mode=json (EU-hosted boards use api.eu.lever.co). Clean Yield’s ATS Jobs Scraper reads the same feed for many companies at once, at the 1 request per second Lever asks for, and returns the salary when stated in the same format as Greenhouse and Workday.</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/ats-jobs-scraper-lite">Try the Lite version first (no per-result charge)</a> <a class="btn ghost" href="https://apify.com/cleanyield/ats-jobs-scraper">Full version in the Apify Store</a></p>
+
+<h2>Real example from our run on 2026-11-11</h2>
+<p>Spotify’s Lever board, 10 newest jobs. Two shown in full, all 10 in the table.</p>
+<h3>Input</h3>
+<pre><code>{
+  &quot;companies&quot;: [
+    &quot;https://jobs.lever.co/spotify&quot;
+  ],
+  &quot;maxJobsPerCompany&quot;: 10,
+  &quot;includeDescription&quot;: &quot;none&quot;
+}</code></pre>
+<h3>Output (selected fields)</h3>
+<pre><code>[
+  {
+    &quot;company&quot;: &quot;Spotify&quot;,
+    &quot;ats&quot;: &quot;lever&quot;,
+    &quot;title&quot;: &quot;Senior Director, Global Advertising Product Marketing&quot;,
+    &quot;department&quot;: &quot;Advertising&quot;,
+    &quot;location&quot;: &quot;New York, NY&quot;,
+    &quot;workplaceType&quot;: &quot;hybrid&quot;,
+    &quot;employmentType&quot;: &quot;full_time&quot;,
+    &quot;salaryAnnualMin&quot;: 291071,
+    &quot;salaryAnnualMax&quot;: 414388,
+    &quot;salaryCurrency&quot;: &quot;USD&quot;,
+    &quot;salaryText&quot;: &quot;$291,071 - $414,388&quot;,
+    &quot;postedAt&quot;: &quot;2026-11-10T21:24:38.920Z&quot;,
+    &quot;url&quot;: &quot;https://jobs.lever.co/spotify/b9533f31-7bff-43f6-aaf0-60003f017d88&quot;
+  },
+  {
+    &quot;company&quot;: &quot;Spotify&quot;,
+    &quot;ats&quot;: &quot;lever&quot;,
+    &quot;title&quot;: &quot;Senior Product Manager — Subscriptions (Freemium)&quot;,
+    &quot;department&quot;: &quot;Product&quot;,
+    &quot;location&quot;: &quot;London&quot;,
+    &quot;workplaceType&quot;: &quot;hybrid&quot;,
+    &quot;employmentType&quot;: &quot;full_time&quot;,
+    &quot;salaryAnnualMin&quot;: null,
+    &quot;salaryAnnualMax&quot;: null,
+    &quot;salaryCurrency&quot;: null,
+    &quot;salaryText&quot;: null,
+    &quot;postedAt&quot;: &quot;2026-11-10T15:20:58.132Z&quot;,
+    &quot;url&quot;: &quot;https://jobs.lever.co/spotify/94a10740-8d2c-430a-8ef3-2d988142541a&quot;
+  }
+]</code></pre>
+<p class="muted">Run of the Actor's current code on 2026-11-11 (local run with the same code as the version published on Apify; 10 results). 2 of the 10 postings stated a salary range in the text.</p>
+<section class="scroll" aria-label="Rows from the same run" tabindex="0"><table><caption>Rows from the same run</caption><thead><tr><th scope="col">Job title</th><th scope="col">Location</th><th scope="col">Workplace</th><th scope="col">Salary (annual)</th><th scope="col">Posted</th></tr></thead><tbody><tr><td>Senior Director, Global Advertising Product Marketing</td><td>New York, NY</td><td>hybrid</td><td>USD 291,071–414,388</td><td>2026-11-10</td></tr><tr><td>Head of Measurement &amp; Advertising Effectiveness</td><td>New York, NY</td><td>hybrid</td><td>USD 338,758–483,940</td><td>2026-11-10</td></tr><tr><td>Senior Product Manager — Subscriptions (Freemium)</td><td>London</td><td>hybrid</td><td>—</td><td>2026-11-10</td></tr><tr><td>Client Partner - Emerging &amp; Scaled (French Speaking)</td><td>London</td><td>hybrid</td><td>—</td><td>2026-11-10</td></tr><tr><td>Analyst, Royalty Operations</td><td>Stockholm</td><td>hybrid</td><td>—</td><td>2026-11-09</td></tr><tr><td>Retention &amp; Engagement Marketing Lead</td><td>Mumbai</td><td>onsite</td><td>—</td><td>2026-11-09</td></tr><tr><td>Machine Learning Engineering Manager II</td><td>New York, NY</td><td>remote</td><td>—</td><td>2026-11-09</td></tr><tr><td>Senior Accountant, General Ledger Accounting</td><td>Stockholm</td><td>hybrid</td><td>—</td><td>2026-11-09</td></tr><tr><td>Staff Backend Engineer - Content Platform</td><td>London</td><td>hybrid</td><td>—</td><td>2026-11-05</td></tr><tr><td>Account Executive - Commercial, Spotify Technology</td><td>London</td><td>hybrid</td><td>—</td><td>2026-10-23</td></tr></tbody></table></section>
+
+<h2>Fields you get</h2>
+<section class="scroll" aria-label="Fields you get" tabindex="0"><table><caption>Fields you get</caption><thead><tr><th scope="col">Field</th><th scope="col">What it is</th></tr></thead><tbody><tr><td>title, department, team, company</td><td>the job and who is hiring</td></tr><tr><td>location, city, countryCode, workplaceType</td><td>where, and remote, hybrid or onsite</td></tr><tr><td>employmentType</td><td>commitment normalized to full_time, part_time, contract or internship</td></tr><tr><td>salaryAnnualMin, salaryAnnualMax, salaryCurrency, salaryText</td><td>when Lever has a salary range or the text states one (2 of 10 in this run)</td></tr><tr><td>postedAt</td><td>posting date</td></tr><tr><td>url, applyUrl</td><td>the job page and the application link</td></tr></tbody></table></section>
+
+<h2>Do it yourself with the official source</h2>
+<p>The company slug is the part after jobs.lever.co/.</p>
+<pre><code>curl &quot;https://api.lever.co/v0/postings/spotify?mode=json&quot;</code></pre>
+<h3>What you have to handle yourself</h3>
+<ul><li>One company per request, and the slug must be exact (EU boards answer on a different host).</li><li>Salary appears only when the company fills Lever’s salary range; ranges in the description are not parsed.</li><li>Dates are Unix milliseconds and the format differs from every other ATS.</li></ul>
+
+<h2>When Clean Yield’s Actor saves time</h2>
+<ul><li>Type a company name or URL; US and EU Lever hosts are tried for you.</li><li>Salary from Lever’s field or from an explicit range in the text, as yearly min and max.</li><li>Filters by keyword, location, remote and date, and monitor mode for new jobs only.</li><li>The same columns across Lever, Greenhouse, Ashby, Workday and 15 more systems.</li></ul>
+<h3>From your code (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~ats-jobs-scraper/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;companies&quot;: [
+    &quot;https://jobs.lever.co/spotify&quot;
+  ],
+  &quot;maxJobsPerCompany&quot;: 10,
+  &quot;includeDescription&quot;: &quot;none&quot;
+}'</code></pre>
+<p class="muted">Create an API token in Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> caps what the run can cost; the run stops there.</p>
+
+<h2 id="price">Price (charged today)</h2>
+<dl class="price">
+<dt>Today</dt><dd>USD 2 per 1,000 jobs (USD 0.002 per job) plus USD 0.005 per run, on the Apify Free plan; Silver and Gold subscribers pay USD 1.20 per 1,000.</dd>
+<dt>From November 24, 2026</dt><dd>USD 5 per 1,000 jobs (USD 0.005 per job) plus USD 0.005 per run; Silver and Gold USD 3 per 1,000.</dd>
+</dl>
+<p>Optional: monitor mode USD 0.004 per company checked, Pro mode + USD 0.005 per job, company details + USD 0.01 per company. Companies not found and failed requests are not charged.</p>
+<p>Lite version: no per-result charge, up to 25 jobs per run (only Apify platform usage applies).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/ats-jobs-scraper-lite">Try the Lite version first (no per-result charge)</a> <a class="btn ghost" href="https://apify.com/cleanyield/ats-jobs-scraper">Full version in the Apify Store</a></p>
+
+<h2>Questions</h2>
+<h3>Do I need an API key for Lever postings?</h3>
+<p>No. Published postings are public; Lever’s documentation says they may be read by third parties. Keys are only for a company’s own Lever account data.</p>
+<h3>Does it support jobs.eu.lever.co?</h3>
+<p>Yes. Paste the EU URL; for a bare company name the EU host is tried automatically.</p>
+</article>
+<nav aria-label="Related pages"><h2>Related pages</h2><ul><li><a href="../greenhouse-job-board-api/">How to get job postings from the Greenhouse API</a></li><li><a href="../workday-jobs-api/">How to get job postings from Workday</a></li><li><a href="../job-postings-data-api/">Job postings data API</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Updated 2026-11-11</p><p class="muted">Clean Yield is an independent publisher on Apify. Product names are trademarks of their owners and are used only to describe compatibility.</p></div></footer>
+</body>
+</html>

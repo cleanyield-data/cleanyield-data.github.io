@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API de Mercado Público sin ticket: licitaciones de Chile</title>
+<meta name="description" content="Licitaciones de Chile (Mercado Público) por API sin pedir ticket: la API OCDS abierta, sus límites, un ejemplo real del 11/11/2026 y un formato listo para usar.">
+<link rel="canonical" href="https://cleanyield-data.github.io/licitaciones-chile-mercado-publico-api/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="API de Mercado Público sin ticket: licitaciones de Chile">
+<meta property="og:description" content="Licitaciones de Chile (Mercado Público) por API sin pedir ticket: la API OCDS abierta, sus límites, un ejemplo real del 11/11/2026 y un formato listo para usar.">
+<meta property="og:url" content="https://cleanyield-data.github.io/licitaciones-chile-mercado-publico-api/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[{"@type":"Question","name":"¿Cómo obtener las licitaciones de Mercado Público (Chile) por API sin ticket?","acceptedAnswer":{"@type":"Answer","text":"La API clásica de Mercado Público pide un ticket, pero ChileCompra también publica las licitaciones en su API OCDS abierta (apis.mercadopublico.cl/OCDS), sin registro. La Licitaciones Públicas de Latinoamérica de Clean Yield la lee por ti y devuelve cada licitación con comprador y RUT, región, fecha de cierre y monto en pesos y en dólares cuando se informa."}},{"@type":"Question","name":"¿Para qué sirve entonces el ticket?","acceptedAnswer":{"@type":"Answer","text":"Para la API clásica de Mercado Público (api.mercadopublico.cl/servicios). Para leer licitaciones publicadas alcanza con los datos abiertos OCDS."}},{"@type":"Question","name":"¿Por qué algunas no traen monto?","acceptedAnswer":{"@type":"Answer","text":"Porque el organismo no publicó un monto estimado. En ese caso amount queda vacío; no se inventa."}}]},{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Licitaciones Públicas de Latinoamérica","description":"Licitaciones de Chile (Mercado Público) por API sin pedir ticket: la API OCDS abierta, sus límites, un ejemplo real del 11/11/2026 y un formato listo para usar.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/latam-public-tenders","mainEntityOfPage":"https://cleanyield-data.github.io/licitaciones-chile-mercado-publico-api/","inLanguage":"es","offers":{"@type":"Offer","price":"0.008","priceCurrency":"USD","description":"USD 0.008 per tender returned (Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}]</script>
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+<article>
+<h1>¿Cómo obtener las licitaciones de Mercado Público (Chile) por API sin ticket?</h1>
+<p class="answer"><strong>Respuesta corta:</strong> La API clásica de Mercado Público pide un ticket, pero ChileCompra también publica las licitaciones en su API OCDS abierta (apis.mercadopublico.cl/OCDS), sin registro. La Licitaciones Públicas de Latinoamérica de Clean Yield la lee por ti y devuelve cada licitación con comprador y RUT, región, fecha de cierre y monto en pesos y en dólares cuando se informa.</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/latam-public-tenders-lite">Prueba primero la versión Lite (sin cargo por resultado)</a> <a class="btn ghost" href="https://apify.com/cleanyield/latam-public-tenders">Versión completa en la Apify Store</a></p>
+
+<h2>Ejemplo real de nuestra corrida del 11/11/2026</h2>
+<p>Licitaciones abiertas de Chile publicadas en los últimos 3 días, 10 resultados. Se muestran 2 completas y las 10 en la tabla.</p>
+<h3>Entrada</h3>
+<pre><code>{
+  &quot;countries&quot;: [
+    &quot;CL&quot;
+  ],
+  &quot;status&quot;: [
+    &quot;open&quot;
+  ],
+  &quot;publishedWithinDays&quot;: 3,
+  &quot;maxResults&quot;: 10
+}</code></pre>
+<h3>Salida (campos seleccionados)</h3>
+<pre><code>[
+  {
+    &quot;tenderId&quot;: &quot;CL:mercadopublico:14-34-LR26&quot;,
+    &quot;country&quot;: &quot;CL&quot;,
+    &quot;title&quot;: &quot;SERVICIO DE VIGILANCIA Y SEGURIDAD PARA INE RM&quot;,
+    &quot;buyer&quot;: {
+      &quot;name&quot;: &quot;INSTITUTO NACIONAL DE ESTADISTICAS&quot;,
+      &quot;taxId&quot;: &quot;60703000-6&quot;,
+      &quot;region&quot;: &quot;Región Metropolitana de Santiago&quot;
+    },
+    &quot;amount&quot;: {
+      &quot;value&quot;: 576000000,
+      &quot;currency&quot;: &quot;CLP&quot;,
+      &quot;valueUsd&quot;: 594522.26
+    },
+    &quot;status&quot;: &quot;open&quot;,
+    &quot;procedureType&quot;: &quot;public-tender&quot;,
+    &quot;publishedDate&quot;: &quot;2026-11-10&quot;,
+    &quot;closingDate&quot;: &quot;2026-12-11&quot;,
+    &quot;url&quot;: &quot;https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=14-34-LR26&quot;
+  },
+  {
+    &quot;tenderId&quot;: &quot;CL:mercadopublico:2318-86-LE26&quot;,
+    &quot;country&quot;: &quot;CL&quot;,
+    &quot;title&quot;: &quot;Ornamentación e Instalación Eléctrica&quot;,
+    &quot;buyer&quot;: {
+      &quot;name&quot;: &quot;I MUNICIPALIDAD DE SAN JAVIER&quot;,
+      &quot;taxId&quot;: &quot;69130100-1&quot;,
+      &quot;region&quot;: &quot;Región del Maule&quot;
+    },
+    &quot;amount&quot;: {
+      &quot;value&quot;: 16000000,
+      &quot;currency&quot;: &quot;CLP&quot;,
+      &quot;valueUsd&quot;: 16514.51
+    },
+    &quot;status&quot;: &quot;open&quot;,
+    &quot;procedureType&quot;: &quot;public-tender&quot;,
+    &quot;publishedDate&quot;: &quot;2026-11-10&quot;,
+    &quot;closingDate&quot;: &quot;2026-11-20&quot;,
+    &quot;url&quot;: &quot;https://www.mercadopublico.cl/Procurement/Modules/RFB/DetailsAcquisition.aspx?idlicitacion=2318-86-LE26&quot;
+  }
+]</code></pre>
+<p class="muted">Corrida del código actual del Actor el 11/11/2026 (corrida local con el mismo código publicado en Apify; 10 resultados). 7 de las 10 informan monto estimado; las otras 3 quedan con amount vacío.</p>
+<section class="scroll" aria-label="Filas de la misma corrida" tabindex="0"><table><caption>Filas de la misma corrida</caption><thead><tr><th scope="col">Título (como se publicó)</th><th scope="col">Comprador</th><th scope="col">Monto (USD)</th><th scope="col">Cierre</th></tr></thead><tbody><tr><td>Ornamentación e Instalación Eléctrica</td><td>I MUNICIPALIDAD DE SAN JAVIER</td><td>16,515</td><td>2026-11-20</td></tr><tr><td>AIF CONSTRUCCION SERVICIO SANITARIO RURAL HUECHUL, COMUNA DE RIO BUENO.</td><td>MINISTERIO DE OBRAS PUBLICAS DIREC CION GRAL DE OO PP DCYF</td><td>—</td><td>2026-12-10</td></tr><tr><td>ADQUISICION DE BOLSAS DE CONFITES PARA FIESTA NAVIDEÑA</td><td>I MUNICIPALIDAD DE MEJILLONES</td><td>—</td><td>2026-11-23</td></tr><tr><td>ADQUISICION MATERIALES DE CONSTRUCCIÓN</td><td>I MUNICIPALIDAD DE CURACAUTIN</td><td>23,740</td><td>2026-11-16</td></tr><tr><td>CONSTRUCCIÓN ÁREA VERDE BRISAS SAN MIGUEL TALCA Código BIP Nº 40.067.714-0</td><td>I MUNICIPALIDAD DE TALCA</td><td>—</td><td>2026-12-02</td></tr><tr><td>Adquisición de Insumos Computacionales para la Escuela Raúl Castro Márquez</td><td>I MUNICIPALIDAD DE COLLIPULLI</td><td>7,401</td><td>2026-11-20</td></tr><tr><td>SERVICIO DE VIGILANCIA Y SEGURIDAD PARA INE RM</td><td>INSTITUTO NACIONAL DE ESTADISTICAS</td><td>594,522</td><td>2026-12-11</td></tr><tr><td>Solicitud N° 94667 - INSUMOS Y REACTIVOS DE LABORATORIO - 112 / 1872</td><td>UNIVERSIDAD DE SANTIAGO DE CHILE</td><td>6,620</td><td>2026-11-17</td></tr><tr><td>SUMINISTRO DE CALZADOPARA FUNCIONARIOS AS DE LA</td><td>I MUNICIPALIDAD DE CONCEPCION</td><td>41,286</td><td>2026-11-23</td></tr><tr><td>SUMINISTRO DE PANTALONES MODELO HOMBRE Y MUJER PAR</td><td>I MUNICIPALIDAD DE CONCEPCION</td><td>30,965</td><td>2026-11-23</td></tr></tbody></table></section>
+
+<h2>Campos que devuelve</h2>
+<section class="scroll" aria-label="Campos que devuelve" tabindex="0"><table><caption>Campos que devuelve</caption><thead><tr><th scope="col">Campo</th><th scope="col">Qué es</th></tr></thead><tbody><tr><td>tenderId, source, url</td><td>el código de la licitación y el link a la ficha en Mercado Público</td></tr><tr><td>title, titleEn</td><td>título original y traducción al inglés</td></tr><tr><td>buyer (name, taxId, region)</td><td>el organismo comprador con su RUT y región</td></tr><tr><td>amount (value, currency, valueUsd)</td><td>monto estimado en CLP y en USD, cuando la licitación lo informa (7 de 10 en esta corrida)</td></tr><tr><td>status, procedureType</td><td>abierta, cerrada o adjudicada, y el tipo de proceso</td></tr><tr><td>publishedDate, closingDate</td><td>fecha de publicación y cierre de ofertas</td></tr></tbody></table></section>
+
+<h2>Hazlo tú con la fuente oficial</h2>
+<p>Lista de licitaciones del mes (códigos) y después el detalle de cada una:</p>
+<pre><code>curl &quot;https://apis.mercadopublico.cl/OCDS/data/listaA%C3%B1oMes/2026/11/0/100&quot;
+curl &quot;https://apis.mercadopublico.cl/OCDS/data/tender/2318-86-LE26&quot;</code></pre>
+<h3>Lo que tienes que resolver por tu cuenta</h3>
+<ul><li>La lista solo trae códigos: cada licitación es una consulta más (el 11/11 había más de 3.300 en el mes).</li><li>Los datos abiertos pueden ir unas horas atrás del portal.</li><li>Formato OCDS: el monto, las fechas y el comprador están en partes distintas del documento.</li></ul>
+
+<h2>Cuándo te ahorra tiempo el Actor de Clean Yield</h2>
+<ul><li>Sin ticket ni registro: eliges Chile y corres.</li><li>Una fila por licitación con comprador, RUT, región, cierre y monto en CLP y USD.</li><li>El mismo formato que Colombia, Brasil, Paraguay y Uruguay (beta), con filtros por rubro, monto y fecha.</li><li>Se puede programar todos los días y recibir solo las nuevas.</li></ul>
+<h3>Desde tu código (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~latam-public-tenders/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;countries&quot;: [
+    &quot;CL&quot;
+  ],
+  &quot;status&quot;: [
+    &quot;open&quot;
+  ],
+  &quot;publishedWithinDays&quot;: 3,
+  &quot;maxResults&quot;: 10
+}'</code></pre>
+<p class="muted">Crea un token en Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> pone un tope a lo que puede costar la corrida; se corta ahí.</p>
+
+<h2 id="price">Precio (el que se cobra hoy)</h2>
+<dl class="price">
+<dt>Hoy</dt><dd>USD 8 cada 1.000 licitaciones (USD 0,008 por licitación) en el plan gratis de Apify; los suscriptores de Apify pagan menos (Gold: USD 6,20 cada 1.000).</dd>
+<dt class="sr">—</dt><dd class="muted">No hay cambios de precio programados.</dd>
+</dl>
+<p>Modo Pro opcional: + USD 0,006 por licitación (puntaje de ajuste, urgencia, perfil del comprador). Los IDs que no existen y los registros incompletos no se cobran.</p>
+<p>Versión Lite: sin cargo por resultado, hasta 25 licitaciones por corrida (solo se aplica el uso de plataforma de Apify).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/latam-public-tenders-lite">Prueba primero la versión Lite (sin cargo por resultado)</a> <a class="btn ghost" href="https://apify.com/cleanyield/latam-public-tenders">Versión completa en la Apify Store</a></p>
+
+<h2>Preguntas</h2>
+<h3>¿Para qué sirve entonces el ticket?</h3>
+<p>Para la API clásica de Mercado Público (api.mercadopublico.cl/servicios). Para leer licitaciones publicadas alcanza con los datos abiertos OCDS.</p>
+<h3>¿Por qué algunas no traen monto?</h3>
+<p>Porque el organismo no publicó un monto estimado. En ese caso amount queda vacío; no se inventa.</p>
+</article>
+<nav aria-label="Páginas relacionadas"><h2>Páginas relacionadas</h2><ul><li><a href="../licitaciones-colombia-secop-api/">¿Cómo obtener por API las licitaciones abiertas de Colombia (SECOP II)?</a></li><li><a href="../licitaciones-publicas-api/">API de licitaciones públicas</a></li><li><a href="../colombia-chile-public-tenders-api/" hreflang="en" lang="en">How to get public tenders from Colombia and Chile by API</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Actualizado 2026-11-11</p><p class="muted">Clean Yield es un publicador independiente en Apify. Los nombres de productos y organismos son de sus dueños y se usan solo para describir compatibilidad.</p></div></footer>
+</body>
+</html>

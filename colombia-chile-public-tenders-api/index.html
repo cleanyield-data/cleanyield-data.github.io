@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public Tenders API: Colombia (SECOP II) and Chile</title>
+<meta name="description" content="Public tenders API for Colombia (SECOP II) and Chile (Mercado Público): the free official sources, a real example from 2026-11-11, one format with deadline.">
+<link rel="canonical" href="https://cleanyield-data.github.io/colombia-chile-public-tenders-api/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Public Tenders API: Colombia (SECOP II) and Chile">
+<meta property="og:description" content="Public tenders API for Colombia (SECOP II) and Chile (Mercado Público): the free official sources, a real example from 2026-11-11, one format with deadline.">
+<meta property="og:url" content="https://cleanyield-data.github.io/colombia-chile-public-tenders-api/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"How to get public tenders from Colombia and Chile by API","acceptedAnswer":{"@type":"Answer","text":"Colombia publishes its tenders as open data on datos.gov.co (SECOP II) and Chile through Mercado Público’s open OCDS API; both are free, but fields, currencies and status names differ. Clean Yield’s Latin America Public Tenders returns both, plus Brazil, Paraguay and Uruguay (beta), in one format with the bid deadline, the amount in USD when the tender states one and a link to the official notice."}},{"@type":"Question","name":"Do I need a Mercado Público API ticket?","acceptedAnswer":{"@type":"Answer","text":"Not for this. The ticket is for Mercado Público’s classic API; the OCDS open data used here needs no registration."}},{"@type":"Question","name":"How fresh is it?","acceptedAnswer":{"@type":"Answer","text":"Each run reads the official sources when it starts. SECOP II open data and Chile’s OCDS can lag their portals by a few hours."}}]},{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Latin America Public Tenders","description":"Public tenders API for Colombia (SECOP II) and Chile (Mercado Público): the free official sources, a real example from 2026-11-11, one format with deadline.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/latam-public-tenders","mainEntityOfPage":"https://cleanyield-data.github.io/colombia-chile-public-tenders-api/","inLanguage":"en","offers":{"@type":"Offer","price":"0.008","priceCurrency":"USD","description":"USD 0.008 per tender returned (Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}]</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+<article>
+<h1>How to get public tenders from Colombia and Chile by API</h1>
+<p class="answer"><strong>Short answer:</strong> Colombia publishes its tenders as open data on datos.gov.co (SECOP II) and Chile through Mercado Público’s open OCDS API; both are free, but fields, currencies and status names differ. Clean Yield’s Latin America Public Tenders returns both, plus Brazil, Paraguay and Uruguay (beta), in one format with the bid deadline, the amount in USD when the tender states one and a link to the official notice.</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/latam-public-tenders-lite">Try the Lite version first (no per-result charge)</a> <a class="btn ghost" href="https://apify.com/cleanyield/latam-public-tenders">Full version in the Apify Store</a></p>
+
+<h2>Real example from our run on 2026-11-11</h2>
+<p>Open tenders in Colombia published in the last 7 days, 10 results. Two shown in full, all 10 in the table.</p>
+<h3>Input</h3>
+<pre><code>{
+  &quot;countries&quot;: [
+    &quot;CO&quot;
+  ],
+  &quot;status&quot;: [
+    &quot;open&quot;
+  ],
+  &quot;publishedWithinDays&quot;: 7,
+  &quot;maxResults&quot;: 10
+}</code></pre>
+<h3>Output (selected fields)</h3>
+<pre><code>[
+  {
+    &quot;tenderId&quot;: &quot;CO:secop2:CO1.REQ.11245360&quot;,
+    &quot;country&quot;: &quot;CO&quot;,
+    &quot;title&quot;: &quot;SUMINISTRO DE MOBILIARIO DE OFICINA, MÓDULOS DIVISORES, CORTINERÍA BLACKOUT Y ELEMENTOS COMPLEMENTARIOS PARA EL EQUIPAMIENTO Y ADECUACIÓN DE LA COMISARÍA DE FAMILIA DEL MUNICIPIO DE TAURAMENA, CASANARE.&quot;,
+    &quot;buyer&quot;: {
+      &quot;name&quot;: &quot;MUNICIPIO DE TAURAMENA&quot;,
+      &quot;taxId&quot;: &quot;800012873&quot;,
+      &quot;city&quot;: &quot;Tauramena&quot;,
+      &quot;region&quot;: &quot;Casanare&quot;
+    },
+    &quot;amount&quot;: {
+      &quot;value&quot;: 99526126,
+      &quot;currency&quot;: &quot;COP&quot;,
+      &quot;valueUsd&quot;: 30372.25
+    },
+    &quot;status&quot;: &quot;open&quot;,
+    &quot;procedureType&quot;: &quot;reverse-auction&quot;,
+    &quot;publishedDate&quot;: &quot;2026-11-09&quot;,
+    &quot;closingDate&quot;: &quot;2026-11-23&quot;,
+    &quot;url&quot;: &quot;https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.11197627&quot;
+  },
+  {
+    &quot;tenderId&quot;: &quot;CO:secop2:CO1.REQ.11236156&quot;,
+    &quot;country&quot;: &quot;CO&quot;,
+    &quot;title&quot;: &quot;SUMINISTRO DE RACIONES ALIMENTARIAS PARA LOS NIÑOS; NIÑAS; ADOLESCENTES Y JÓVENES BENEFICIADOS DEL PROGRAMA DE ALIMENTACIÓN ESCOLAR - PAE EN LOS ESTABLECIMIENTOS EDUCATIVOS OFICIALES DEL MUNICIPIO DE&quot;,
+    &quot;buyer&quot;: {
+      &quot;name&quot;: &quot;MUNICIPIO DE PIEDECUESTA&quot;,
+      &quot;taxId&quot;: &quot;890205383&quot;,
+      &quot;city&quot;: &quot;Piedecuesta&quot;,
+      &quot;region&quot;: &quot;Santander&quot;
+    },
+    &quot;amount&quot;: {
+      &quot;value&quot;: 11337802875,
+      &quot;currency&quot;: &quot;COP&quot;,
+      &quot;valueUsd&quot;: 3459941.56
+    },
+    &quot;status&quot;: &quot;open&quot;,
+    &quot;procedureType&quot;: &quot;public-tender&quot;,
+    &quot;publishedDate&quot;: &quot;2026-11-09&quot;,
+    &quot;closingDate&quot;: &quot;2026-12-15&quot;,
+    &quot;url&quot;: &quot;https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.11198340&quot;
+  }
+]</code></pre>
+<p class="muted">Run of the Actor’s current code on 2026-11-11 (local run with the same code as the version published on Apify; 10 results). All 10 are open and all 10 state an amount.</p>
+<section class="scroll" aria-label="Rows from the same run" tabindex="0"><table><caption>Rows from the same run</caption><thead><tr><th scope="col">Title (as published)</th><th scope="col">Buyer</th><th scope="col">Amount (USD)</th><th scope="col">Bid deadline</th></tr></thead><tbody><tr><td>CONTRATO DE SUMINISTRO PARA LA ADQUISICIÓN DE PREIMPRESOS, PENDONES, VALLAS Y DEMÁS MATERI…</td><td>ALCALDIA MUNICIPIO DE DOSQUEBRADAS</td><td>9,155</td><td>2026-11-13</td></tr><tr><td>EL CONTRATISTA SE OBLIGA CON EL DEPARTAMENTO DEL CAUCA A PRESTAR EL SERVICIO DE ASEO Y JAR…</td><td>GOBERNACIÓN DEL CAUCA</td><td>17,903</td><td>2026-11-12</td></tr><tr><td>SUMINISTRO DE RACIONES ALIMENTARIAS PARA LOS NIÑOS; NIÑAS; ADOLESCENTES Y JÓVENES BENEFICI…</td><td>MUNICIPIO DE PIEDECUESTA</td><td>3,459,942</td><td>2026-12-15</td></tr><tr><td>SUMINISTRO DE MOBILIARIO DE OFICINA, MÓDULOS DIVISORES, CORTINERÍA BLACKOUT Y ELEMENTOS CO…</td><td>MUNICIPIO DE TAURAMENA</td><td>30,372</td><td>2026-11-23</td></tr><tr><td>MC-VLL-CAB-0036-2026 - MMTO BAÑOS</td><td>Sena - Centro Agropecuario de Buga</td><td>42,723</td><td>2026-11-13</td></tr><tr><td>MEJORAMIENTO DE VIAS TERCIARIAS MEDIANTE LA CONSTRUCCION DE PLACA HUELLA EN LA VEREDA CLAV…</td><td>ALCALDIA MUNICIPAL DE ARATOCA</td><td>117,843</td><td>2026-11-26</td></tr><tr><td>SUMINISTRO DE SUDADERAS (CHAQUETA, PANTALON Y CAMISETA) DESTINADO A LOS ADULTOS MAYORES BE…</td><td>ALCALDIA MUNICIPIO DE DOSQUEBRADAS</td><td>33,233</td><td>2026-11-23</td></tr><tr><td>SUMINISTRO DE GRASAS, LIQUIDOS, LUBRICANTES, FILTROS Y ACEITES POR MONTO AGOTABLE PARA LA …</td><td>MUNICIPIO DE COVARACHIA1</td><td>7,324</td><td>2026-11-11</td></tr><tr><td>PRESTACION DE SERVICIOS LOGISTICOS PARA LA CONMEMORACION DEL DIA INTERNACIONAL DE LAS COMU…</td><td>MUNICIPIO DE PURIFICACION</td><td>11,773</td><td>2026-11-12</td></tr><tr><td>PRESTACIÓN DEL SERVICIO DE ASEO A TODO COSTO DE INSTALACIONES DE LA REGION DE POLICIA No. …</td><td>MENEV</td><td>16,626</td><td>2026-11-13</td></tr></tbody></table></section>
+
+<h2>Fields you get</h2>
+<section class="scroll" aria-label="Fields you get" tabindex="0"><table><caption>Fields you get</caption><thead><tr><th scope="col">Field</th><th scope="col">What it is</th></tr></thead><tbody><tr><td>tenderId, country, source, url</td><td>the tender and the link to the official notice</td></tr><tr><td>title, titleEn, description</td><td>original title and an English translation</td></tr><tr><td>buyer (name, taxId, city, region)</td><td>the buying agency</td></tr><tr><td>amount (value, currency, valueUsd)</td><td>amount in local currency and USD, when the tender states one</td></tr><tr><td>status, procedureType</td><td>open, closed or awarded, and the procedure in one vocabulary for every country</td></tr><tr><td>publishedDate, closingDate</td><td>publication date and bid deadline</td></tr></tbody></table></section>
+
+<h2>Do it yourself with the official source</h2>
+<p>Colombia (SECOP II processes, Socrata API) and Chile (OCDS list of the month), no registration:</p>
+<pre><code>curl -G &quot;https://www.datos.gov.co/resource/p6dx-8zbt.json&quot; \
+  --data-urlencode &quot;\$where=estado_del_procedimiento='Publicado' AND fecha_de_publicacion_del &gt;= '2026-11-09T00:00:00'&quot; \
+  --data-urlencode &quot;\$limit=50&quot;
+curl &quot;https://apis.mercadopublico.cl/OCDS/data/listaA%C3%B1oMes/2026/11/0/100&quot;</code></pre>
+<h3>What you have to handle yourself</h3>
+<ul><li>SECOP’s status column alone misleads: processes in &quot;Evaluación&quot; or &quot;Aprobado&quot; can still be open until their deadline, and direct contracts are mixed in.</li><li>Chile’s list returns only codes; each tender needs another request, and the open data can lag the portal by a few hours.</li><li>Amounts come in COP or CLP, with different field names in each country.</li></ul>
+
+<h2>When Clean Yield’s Actor saves time</h2>
+<ul><li>One format for Colombia, Chile, Brazil, Paraguay and Uruguay (beta).</li><li>&quot;Open&quot; means the bid deadline is still ahead, checked per tender; direct contracts are left out.</li><li>Amount in USD next to the local amount, English titles and filters by sector, keyword, amount and date.</li><li>Can run daily and return only new tenders.</li></ul>
+<h3>From your code (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~latam-public-tenders/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;countries&quot;: [
+    &quot;CO&quot;
+  ],
+  &quot;status&quot;: [
+    &quot;open&quot;
+  ],
+  &quot;publishedWithinDays&quot;: 7,
+  &quot;maxResults&quot;: 10
+}'</code></pre>
+<p class="muted">Create an API token in Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> caps what the run can cost; the run stops there.</p>
+
+<h2 id="price">Price (charged today)</h2>
+<dl class="price">
+<dt>Today</dt><dd>USD 8 per 1,000 tenders (USD 0.008 per tender) on the Apify Free plan; Apify subscribers pay less (Gold: USD 6.20 per 1,000).</dd>
+<dt class="sr">—</dt><dd class="muted">No price change is scheduled.</dd>
+</dl>
+<p>Optional Pro mode: + USD 0.006 per tender (fit score, urgency, buyer profile). Tender IDs that do not exist and incomplete records are not charged.</p>
+<p>Lite version: no per-result charge, up to 25 tenders per run (only Apify platform usage applies).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/latam-public-tenders-lite">Try the Lite version first (no per-result charge)</a> <a class="btn ghost" href="https://apify.com/cleanyield/latam-public-tenders">Full version in the Apify Store</a></p>
+
+<h2>Questions</h2>
+<h3>Do I need a Mercado Público API ticket?</h3>
+<p>Not for this. The ticket is for Mercado Público’s classic API; the OCDS open data used here needs no registration.</p>
+<h3>How fresh is it?</h3>
+<p>Each run reads the official sources when it starts. SECOP II open data and Chile’s OCDS can lag their portals by a few hours.</p>
+</article>
+<nav aria-label="Related pages"><h2>Related pages</h2><ul><li><a href="../licitaciones-colombia-secop-api/" hreflang="es" lang="es">¿Cómo obtener por API las licitaciones abiertas de Colombia (SECOP II)?</a></li><li><a href="../licitaciones-chile-mercado-publico-api/" hreflang="es" lang="es">¿Cómo obtener las licitaciones de Mercado Público (Chile) por API sin ticket?</a></li><li><a href="../licitaciones-publicas-api/" hreflang="es" lang="es">API de licitaciones públicas</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Updated 2026-11-11</p><p class="muted">Clean Yield is an independent publisher on Apify. Product names are trademarks of their owners and are used only to describe compatibility.</p></div></footer>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API de SECOP II: licitaciones abiertas de Colombia</title>
+<meta name="description" content="Cómo obtener por API las licitaciones abiertas de Colombia (SECOP II): la fuente oficial gratis, sus trampas, un ejemplo real del 11/11/2026 y el formato listo.">
+<link rel="canonical" href="https://cleanyield-data.github.io/licitaciones-colombia-secop-api/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="API de SECOP II: licitaciones abiertas de Colombia">
+<meta property="og:description" content="Cómo obtener por API las licitaciones abiertas de Colombia (SECOP II): la fuente oficial gratis, sus trampas, un ejemplo real del 11/11/2026 y el formato listo.">
+<meta property="og:url" content="https://cleanyield-data.github.io/licitaciones-colombia-secop-api/">
+<meta property="og:site_name" content="Clean Yield">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../style.css">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"es","mainEntity":[{"@type":"Question","name":"¿Cómo obtener por API las licitaciones abiertas de Colombia (SECOP II)?","acceptedAnswer":{"@type":"Answer","text":"SECOP II publica sus procesos como datos abiertos en datos.gov.co (dataset p6dx-8zbt, API Socrata), gratis y sin registro. Si quieres solo las abiertas de verdad, con fecha de cierre, monto en pesos y en dólares y el link al aviso, en un formato listo para usar, la Licitaciones Públicas de Latinoamérica de Clean Yield lo hace en una corrida de segundos."}},{"@type":"Question","name":"¿Necesito registrarme en datos.gov.co?","acceptedAnswer":{"@type":"Answer","text":"No. La API de datos abiertos de SECOP II es pública. Con un token gratis de Socrata solo subes el límite de consultas."}},{"@type":"Question","name":"¿Trae la hora de cierre?","acceptedAnswer":{"@type":"Answer","text":"Los datos abiertos de SECOP II publican la fecha de recepción de ofertas, no siempre la hora. Por eso closingDate es una fecha."}}]},{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Licitaciones Públicas de Latinoamérica","description":"Cómo obtener por API las licitaciones abiertas de Colombia (SECOP II): la fuente oficial gratis, sus trampas, un ejemplo real del 11/11/2026 y el formato listo.","applicationCategory":"BusinessApplication","operatingSystem":"Web","url":"https://apify.com/cleanyield/latam-public-tenders","mainEntityOfPage":"https://cleanyield-data.github.io/licitaciones-colombia-secop-api/","inLanguage":"es","offers":{"@type":"Offer","price":"0.008","priceCurrency":"USD","description":"USD 0.008 per tender returned (Apify Free plan price)"},"publisher":{"@type":"Organization","name":"Clean Yield","url":"https://apify.com/cleanyield"}}]</script>
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+<header class="top"><div class="wrap"><a class="brand" href="../">Clean Yield</a><nav aria-label="Site"><a href="../#actors">Actors</a><a href="../llms.txt">llms.txt</a><a href="https://apify.com/cleanyield">Apify Store</a></nav></div></header>
+<main id="main" class="wrap">
+<article>
+<h1>¿Cómo obtener por API las licitaciones abiertas de Colombia (SECOP II)?</h1>
+<p class="answer"><strong>Respuesta corta:</strong> SECOP II publica sus procesos como datos abiertos en datos.gov.co (dataset p6dx-8zbt, API Socrata), gratis y sin registro. Si quieres solo las abiertas de verdad, con fecha de cierre, monto en pesos y en dólares y el link al aviso, en un formato listo para usar, la Licitaciones Públicas de Latinoamérica de Clean Yield lo hace en una corrida de segundos.</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/latam-public-tenders-lite">Prueba primero la versión Lite (sin cargo por resultado)</a> <a class="btn ghost" href="https://apify.com/cleanyield/latam-public-tenders">Versión completa en la Apify Store</a></p>
+
+<h2>Ejemplo real de nuestra corrida del 11/11/2026</h2>
+<p>Licitaciones abiertas de Colombia publicadas en los últimos 7 días, 10 resultados. Se muestran 2 completas y las 10 en la tabla.</p>
+<h3>Entrada</h3>
+<pre><code>{
+  &quot;countries&quot;: [
+    &quot;CO&quot;
+  ],
+  &quot;status&quot;: [
+    &quot;open&quot;
+  ],
+  &quot;publishedWithinDays&quot;: 7,
+  &quot;maxResults&quot;: 10
+}</code></pre>
+<h3>Salida (campos seleccionados)</h3>
+<pre><code>[
+  {
+    &quot;tenderId&quot;: &quot;CO:secop2:CO1.REQ.11245360&quot;,
+    &quot;country&quot;: &quot;CO&quot;,
+    &quot;title&quot;: &quot;SUMINISTRO DE MOBILIARIO DE OFICINA, MÓDULOS DIVISORES, CORTINERÍA BLACKOUT Y ELEMENTOS COMPLEMENTARIOS PARA EL EQUIPAMIENTO Y ADECUACIÓN DE LA COMISARÍA DE FAMILIA DEL MUNICIPIO DE TAURAMENA, CASANARE.&quot;,
+    &quot;buyer&quot;: {
+      &quot;name&quot;: &quot;MUNICIPIO DE TAURAMENA&quot;,
+      &quot;taxId&quot;: &quot;800012873&quot;,
+      &quot;city&quot;: &quot;Tauramena&quot;,
+      &quot;region&quot;: &quot;Casanare&quot;
+    },
+    &quot;amount&quot;: {
+      &quot;value&quot;: 99526126,
+      &quot;currency&quot;: &quot;COP&quot;,
+      &quot;valueUsd&quot;: 30372.25
+    },
+    &quot;status&quot;: &quot;open&quot;,
+    &quot;procedureType&quot;: &quot;reverse-auction&quot;,
+    &quot;publishedDate&quot;: &quot;2026-11-09&quot;,
+    &quot;closingDate&quot;: &quot;2026-11-23&quot;,
+    &quot;url&quot;: &quot;https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.11197627&quot;
+  },
+  {
+    &quot;tenderId&quot;: &quot;CO:secop2:CO1.REQ.11236156&quot;,
+    &quot;country&quot;: &quot;CO&quot;,
+    &quot;title&quot;: &quot;SUMINISTRO DE RACIONES ALIMENTARIAS PARA LOS NIÑOS; NIÑAS; ADOLESCENTES Y JÓVENES BENEFICIADOS DEL PROGRAMA DE ALIMENTACIÓN ESCOLAR - PAE EN LOS ESTABLECIMIENTOS EDUCATIVOS OFICIALES DEL MUNICIPIO DE&quot;,
+    &quot;buyer&quot;: {
+      &quot;name&quot;: &quot;MUNICIPIO DE PIEDECUESTA&quot;,
+      &quot;taxId&quot;: &quot;890205383&quot;,
+      &quot;city&quot;: &quot;Piedecuesta&quot;,
+      &quot;region&quot;: &quot;Santander&quot;
+    },
+    &quot;amount&quot;: {
+      &quot;value&quot;: 11337802875,
+      &quot;currency&quot;: &quot;COP&quot;,
+      &quot;valueUsd&quot;: 3459941.56
+    },
+    &quot;status&quot;: &quot;open&quot;,
+    &quot;procedureType&quot;: &quot;public-tender&quot;,
+    &quot;publishedDate&quot;: &quot;2026-11-09&quot;,
+    &quot;closingDate&quot;: &quot;2026-12-15&quot;,
+    &quot;url&quot;: &quot;https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.11198340&quot;
+  }
+]</code></pre>
+<p class="muted">Corrida del código actual del Actor el 11/11/2026 (corrida local con el mismo código publicado en Apify; 10 resultados). Las 10 están abiertas y las 10 informan monto.</p>
+<section class="scroll" aria-label="Filas de la misma corrida" tabindex="0"><table><caption>Filas de la misma corrida</caption><thead><tr><th scope="col">Título (como se publicó)</th><th scope="col">Comprador</th><th scope="col">Monto (USD)</th><th scope="col">Cierre</th></tr></thead><tbody><tr><td>CONTRATO DE SUMINISTRO PARA LA ADQUISICIÓN DE PREIMPRESOS, PENDONES, VALLAS Y DEMÁS MATERI…</td><td>ALCALDIA MUNICIPIO DE DOSQUEBRADAS</td><td>9,155</td><td>2026-11-13</td></tr><tr><td>EL CONTRATISTA SE OBLIGA CON EL DEPARTAMENTO DEL CAUCA A PRESTAR EL SERVICIO DE ASEO Y JAR…</td><td>GOBERNACIÓN DEL CAUCA</td><td>17,903</td><td>2026-11-12</td></tr><tr><td>SUMINISTRO DE RACIONES ALIMENTARIAS PARA LOS NIÑOS; NIÑAS; ADOLESCENTES Y JÓVENES BENEFICI…</td><td>MUNICIPIO DE PIEDECUESTA</td><td>3,459,942</td><td>2026-12-15</td></tr><tr><td>SUMINISTRO DE MOBILIARIO DE OFICINA, MÓDULOS DIVISORES, CORTINERÍA BLACKOUT Y ELEMENTOS CO…</td><td>MUNICIPIO DE TAURAMENA</td><td>30,372</td><td>2026-11-23</td></tr><tr><td>MC-VLL-CAB-0036-2026 - MMTO BAÑOS</td><td>Sena - Centro Agropecuario de Buga</td><td>42,723</td><td>2026-11-13</td></tr><tr><td>MEJORAMIENTO DE VIAS TERCIARIAS MEDIANTE LA CONSTRUCCION DE PLACA HUELLA EN LA VEREDA CLAV…</td><td>ALCALDIA MUNICIPAL DE ARATOCA</td><td>117,843</td><td>2026-11-26</td></tr><tr><td>SUMINISTRO DE SUDADERAS (CHAQUETA, PANTALON Y CAMISETA) DESTINADO A LOS ADULTOS MAYORES BE…</td><td>ALCALDIA MUNICIPIO DE DOSQUEBRADAS</td><td>33,233</td><td>2026-11-23</td></tr><tr><td>SUMINISTRO DE GRASAS, LIQUIDOS, LUBRICANTES, FILTROS Y ACEITES POR MONTO AGOTABLE PARA LA …</td><td>MUNICIPIO DE COVARACHIA1</td><td>7,324</td><td>2026-11-11</td></tr><tr><td>PRESTACION DE SERVICIOS LOGISTICOS PARA LA CONMEMORACION DEL DIA INTERNACIONAL DE LAS COMU…</td><td>MUNICIPIO DE PURIFICACION</td><td>11,773</td><td>2026-11-12</td></tr><tr><td>PRESTACIÓN DEL SERVICIO DE ASEO A TODO COSTO DE INSTALACIONES DE LA REGION DE POLICIA No. …</td><td>MENEV</td><td>16,626</td><td>2026-11-13</td></tr></tbody></table></section>
+
+<h2>Campos que devuelve</h2>
+<section class="scroll" aria-label="Campos que devuelve" tabindex="0"><table><caption>Campos que devuelve</caption><thead><tr><th scope="col">Campo</th><th scope="col">Qué es</th></tr></thead><tbody><tr><td>tenderId, source, url</td><td>el proceso (CO1.REQ…) y el link al aviso en SECOP</td></tr><tr><td>title, titleEn</td><td>título original y traducción al inglés</td></tr><tr><td>buyer (name, taxId, city, region)</td><td>la entidad compradora con su NIT, municipio y departamento</td></tr><tr><td>amount (value, currency, valueUsd)</td><td>precio base en COP y en USD</td></tr><tr><td>status, procedureType</td><td>abierta, cerrada o adjudicada, y la modalidad (subasta inversa, mínima cuantía, licitación pública…)</td></tr><tr><td>publishedDate, closingDate</td><td>fecha de publicación y fecha de recepción de ofertas</td></tr></tbody></table></section>
+
+<h2>Hazlo tú con la fuente oficial</h2>
+<p>Procesos publicados desde el 9/11, directo de la API de datos abiertos:</p>
+<pre><code>curl -G &quot;https://www.datos.gov.co/resource/p6dx-8zbt.json&quot; \
+  --data-urlencode &quot;\$where=estado_del_procedimiento='Publicado' AND fecha_de_publicacion_del &gt;= '2026-11-09T00:00:00'&quot; \
+  --data-urlencode &quot;\$limit=50&quot;</code></pre>
+<h3>Lo que tienes que resolver por tu cuenta</h3>
+<ul><li>El estado solo engaña: hay procesos en &quot;Evaluación&quot; o &quot;Aprobado&quot; que siguen recibiendo ofertas hasta su fecha de cierre, y otros &quot;Publicado&quot; que ya cerraron.</li><li>Vienen mezcladas la contratación directa y los regímenes especiales, que no son licitaciones abiertas a cualquiera.</li><li>El monto viene como texto en pesos y el link al aviso, anidado.</li></ul>
+
+<h2>Cuándo te ahorra tiempo el Actor de Clean Yield</h2>
+<ul><li>&quot;Abierta&quot; quiere decir que la fecha de cierre todavía no pasó, revisado proceso por proceso.</li><li>Sin contratación directa; modalidades con los mismos nombres que en Brasil, Chile, Paraguay y Uruguay.</li><li>Monto en USD al lado del monto en pesos, título en inglés y filtros por rubro, palabra clave, monto y fecha.</li><li>Se puede programar todos los días y recibir solo las nuevas.</li></ul>
+<h3>Desde tu código (API)</h3>
+<pre><code>curl -X POST &quot;https://api.apify.com/v2/acts/cleanyield~latam-public-tenders/run-sync-get-dataset-items?maxTotalChargeUsd=1&quot; \
+  -H &quot;Authorization: Bearer $APIFY_TOKEN&quot; \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{
+  &quot;countries&quot;: [
+    &quot;CO&quot;
+  ],
+  &quot;status&quot;: [
+    &quot;open&quot;
+  ],
+  &quot;publishedWithinDays&quot;: 7,
+  &quot;maxResults&quot;: 10
+}'</code></pre>
+<p class="muted">Crea un token en Apify Console → Settings → Integrations. <code>maxTotalChargeUsd</code> pone un tope a lo que puede costar la corrida; se corta ahí.</p>
+
+<h2 id="price">Precio (el que se cobra hoy)</h2>
+<dl class="price">
+<dt>Hoy</dt><dd>USD 8 cada 1.000 licitaciones (USD 0,008 por licitación) en el plan gratis de Apify; los suscriptores de Apify pagan menos (Gold: USD 6,20 cada 1.000).</dd>
+<dt class="sr">—</dt><dd class="muted">No hay cambios de precio programados.</dd>
+</dl>
+<p>Modo Pro opcional: + USD 0,006 por licitación (puntaje de ajuste, urgencia, perfil del comprador). Los IDs que no existen y los registros incompletos no se cobran.</p>
+<p>Versión Lite: sin cargo por resultado, hasta 25 licitaciones por corrida (solo se aplica el uso de plataforma de Apify).</p>
+<p class="ctas"><a class="btn" href="https://apify.com/cleanyield/latam-public-tenders-lite">Prueba primero la versión Lite (sin cargo por resultado)</a> <a class="btn ghost" href="https://apify.com/cleanyield/latam-public-tenders">Versión completa en la Apify Store</a></p>
+
+<h2>Preguntas</h2>
+<h3>¿Necesito registrarme en datos.gov.co?</h3>
+<p>No. La API de datos abiertos de SECOP II es pública. Con un token gratis de Socrata solo subes el límite de consultas.</p>
+<h3>¿Trae la hora de cierre?</h3>
+<p>Los datos abiertos de SECOP II publican la fecha de recepción de ofertas, no siempre la hora. Por eso closingDate es una fecha.</p>
+</article>
+<nav aria-label="Páginas relacionadas"><h2>Páginas relacionadas</h2><ul><li><a href="../licitaciones-chile-mercado-publico-api/">¿Cómo obtener las licitaciones de Mercado Público (Chile) por API sin ticket?</a></li><li><a href="../licitaciones-publicas-api/">API de licitaciones públicas</a></li><li><a href="../colombia-chile-public-tenders-api/" hreflang="en" lang="en">How to get public tenders from Colombia and Chile by API</a></li></ul></nav>
+</main>
+<footer class="foot"><div class="wrap"><p>© 2026 Clean Yield · <a href="https://apify.com/cleanyield">apify.com/cleanyield</a> · Actualizado 2026-11-11</p><p class="muted">Clean Yield es un publicador independiente en Apify. Los nombres de productos y organismos son de sus dueños y se usan solo para describir compatibilidad.</p></div></footer>
+</body>
+</html>
